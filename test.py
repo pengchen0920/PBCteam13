@@ -1,5 +1,3 @@
-print(test)
-
-print(test2)
+print("Bu+0")
 
 print("pengchen")
