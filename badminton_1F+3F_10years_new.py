@@ -95,17 +95,17 @@ for i in range(7):
         sortedfirstPeriod = (sorted(firstPeriod[i][j].items(), key=lambda d: -d[1]))  # 按機率大小排序
 
         if '有場' in firstPeriod[i][j]:  # 印出有場機率
-            print('  一樓有場機率:', '%.2f' % (firstPeriod[i][j]['有場'] * 100)+'%')
+            print('　　一樓有場機率:', '%.2f' % (firstPeriod[i][j]['有場'] * 100)+'%')
         else:
-            print('  一樓有場機率: 0.00%')
+            print('　　一樓有場機率: 0.00%')
 
         print()
 
         for k in range(5):  # 印出前五高的事件及其機率
-            print('  ', sortedfirstPeriod[k][0], '%.2f' % (sortedfirstPeriod[k][1] * 100)+'%')
+            print('　　　　', sortedfirstPeriod[k][0], '%.2f' % (sortedfirstPeriod[k][1] * 100)+'%')
 
         print()
-        
+
         # 三樓
         total = sum(thirdPeriod[i][j].values())  # 星期i時段j中的事件總次數
 
@@ -115,17 +115,17 @@ for i in range(7):
         sortedthirdPeriod = (sorted(thirdPeriod[i][j].items(), key=lambda d: -d[1]))  # 按機率大小排序
 
         if '有場' in thirdPeriod[i][j]:  # 印出有場機率
-            print('  三樓有場機率:', '%.2f' % (thirdPeriod[i][j]['有場'] * 100)+'%')
+            print('　　三樓有場機率:', '%.2f' % (thirdPeriod[i][j]['有場'] * 100)+'%')
         else:
-            print('  三樓有場機率: 0.00%')
+            print('　　三樓有場機率: 0.00%')
 
         print()
 
         for k in range(5):  # 印出前五高的事件及其機率
-            print('  ', sortedthirdPeriod[k][0], '%.2f' % (sortedthirdPeriod[k][1] * 100)+'%')
+            print('　　　　', sortedthirdPeriod[k][0], '%.2f' % (sortedthirdPeriod[k][1] * 100)+'%')
 
         print()
-        
+
         # union
         total = sum(totalPeriod[i][j].values())  # 星期i時段j中的事件總次數
 
@@ -135,8 +135,8 @@ for i in range(7):
         sortedTotalPeriod = (sorted(totalPeriod[i][j].items(), key=lambda d: -d[1]))  # 按機率大小排序
 
         if '有場' in totalPeriod[i][j]:  # 印出有場機率
-            print('  union後有場機率:', '%.2f' % (totalPeriod[i][j]['有場'] * 100)+'%')
+            print('　　union後有場機率:', '%.2f' % (totalPeriod[i][j]['有場'] * 100)+'%')
         else:
-            print('  union後有場機率: 0.00%')
+            print('　　union後有場機率: 0.00%')
 
         print()
