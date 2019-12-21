@@ -28,11 +28,14 @@ for row in rows:
         for i in range(7):  # 星期
             if row[0].date().weekday() == i:
                 for j in range(14):  # 時段
-                    if '有場' in (row[j+1], row[j+8]):
+
+                    # 只要一樓或三樓同一時段有任一空場即為有場
+                    if '有場' in (row[j+1], row[j+15]):
                         if '有場' in period[i][j]:
                             period[i][j]['有場'] += 1
                         else:
                             period[i][j]['有場'] = 1
+                    # 若一三樓皆無場則計算為無場
                     else:
                         if '無場' in period[i][j]:
                             period[i][j]['無場'] += 1
