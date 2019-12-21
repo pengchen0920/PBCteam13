@@ -9,7 +9,7 @@
 
 
 import requests
-from bs4 import BeautifulSoup 
+from bs4 import BeautifulSoup
 import datetime
 
 
@@ -35,11 +35,11 @@ for l in range(3):
 
     if r.status_code == requests.codes.ok: # OK!
         print("OK!" + str(l+1))
-        
+
     column = []
     for k in range(7):
         column.append([])
-        
+
     soup = BeautifulSoup(r.text, 'html.parser')
 
     # focusing on a certain attribute
@@ -54,25 +54,25 @@ for l in range(3):
             # if it is the first row that contains date
             if i == 0:
                 column[j-1].append(cols[j].get_text())
-                
+
             else:
                 td_text = cols[j].get_text()
                 if td_text.count("(") == 1:
-                    
+
                     # still needs to check
                     # if the img is green check means there are no court(15 courts are booked)
                     # else if the img is red circle means there are 15 availible court(15 courts are left)
                     # src: Image/actn010_2.gif(green check)
                     # src: Image/14dot1b.gif(red circle)
-                    
+
                     if cols[j].find('img').get('src') == 'Image/actn010_2.gif':
                         td_text += ":無場!"
                     elif cols[j].find('img').get('src') == 'Image/14dot1b.gif':
                          td_text += ":有場!"
-                
-               
+
+
                 column[j-1].append(td_text)
-                
+
     columns.extend(column)
 
 
@@ -134,7 +134,9 @@ for day in two_weeks_3F[8:]:
             day[time] += " 尚未開放網路預約"
 
 
-# In[ ]:
+for day in two_weeks_3F:
+    print(day)
+    print()
 
 
 # important note!
@@ -142,7 +144,3 @@ for day in two_weeks_3F[8:]:
 
 
 # In[ ]:
-
-
-
-
