@@ -143,9 +143,22 @@ for day in two_weeks_3F[8:]:
             day[time] += " 尚未開放網路預約"
 
 
-for day in two_weeks_3F:
-    print(day)
-    print()
+# for day in two_weeks_3F:
+#     print(day)
+#     print()
+
+time_table = []
+for i in range(15):
+    time_table.append([])
+
+for day in range(15):
+    for j in range(1,15):
+        if(("有場" in two_weeks_3F[day][j]) or (two_weeks_3F[day][j].count("(") == 2)):
+            time_table[day].append(1)
+        else:
+            time_table[day].append(0)
+
+print(time_table)
 
 
 # important note!
