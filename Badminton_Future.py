@@ -166,6 +166,7 @@ print(time_table)
 
 
 # 1F!!!!!!
+
 import time
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -178,7 +179,7 @@ from selenium.webdriver.common.keys import Keys
 
 
 columns_1f = []
-driver = webdriver.Chrome("/Users/pengchen/Desktop/大四上/商管程設/final_project/chromedriver")
+driver = webdriver.Chrome(r"C:\Users\User\Desktop\chromedriver")
 
 
 # In[59]:
@@ -234,7 +235,7 @@ for l in range(3):
     
     time.sleep(0.5)
     page = driver.page_source
-    soup_f1 = BeautifulSoup(page)
+    soup_f1 = BeautifulSoup(page, features="html.parser")
     
     # focusing on a certain attribute
     # this table contains court info
@@ -325,9 +326,9 @@ for i in range(15):
 
 for day in range(15):
     for j in range(1,15):
-        if(("有場" in two_weeks_1F[day][j]) or (two_weeks_1F[day][j].count("(") == 2)):
+        if("有場" in two_weeks_1F[day][j]) or (two_weeks_1F[day][j].count("(") == 2):
             time_table_1f[day].append(1)
         else:
             time_table_1f[day].append(0)
 
-
+print(time_table_1f)
