@@ -395,27 +395,9 @@ for i in range(15):
 weekday_today = datetime.date.today().weekday()
 for i in range(15):
     for j in range(14):
-        if weekday_today%7 == 0:
-            if time_available[0][j] == 1 and (time_table[i][j] == 1 or time_table_1f[i][j] == 1):
-                time_final[i][j] = 1
-        elif weekday_today%7 == 1:
-            if time_available[1][j] == 1 and (time_table[i][j] == 1 or time_table_1f[i][j] == 1):
-                time_final[i][j] = 1
-        elif weekday_today%7 == 2:
-            if time_available[2][j] == 1 and (time_table[i][j] == 1 or time_table_1f[i][j] == 1):
-                time_final[i][j] = 1
-        elif weekday_today%7 == 3:
-            if time_available[3][j] == 1 and (time_table[i][j] == 1 or time_table_1f[i][j] == 1):
-                time_final[i][j] = 1
-        elif weekday_today%7 == 4:
-            if time_available[4][j] == 1 and (time_table[i][j] == 1 or time_table_1f[i][j] == 1):
-                time_final[i][j] = 1
-        elif weekday_today%7 == 5:
-            if time_available[5][j] == 1 and (time_table[i][j] == 1 or time_table_1f[i][j] == 1):
-                time_final[i][j] = 1
-        else:
-            if time_available[6][j] == 1 and (time_table[i][j] == 1 or time_table_1f[i][j] == 1):
-                time_final[i][j] = 1
+        weekday_temp = weekday_today%7
+        if time_available[weekday_temp][j] == 1 and (time_table[i][j] == 1 or time_table_1f[i][j] == 1):
+            time_final[i][j] = 1
     weekday_today += 1
 '''
 print('-'*50)
@@ -439,6 +421,7 @@ for i in range(15):
     date_today += datetime.timedelta(days=1)
 
 print('-'*50)
+print('Below is the time you can book the badminton court in your available time!')
 for i in range(15):
     if any(time_final[i]):
         print('%s : ' % (date_today1.strftime('%Y/%m/%d')), time_final[i])
