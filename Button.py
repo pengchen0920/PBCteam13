@@ -42,7 +42,8 @@ for l in range(3):
     r = requests.get(url)
 
     if r.status_code == requests.codes.ok:  # OK!
-        print("OK!" + str(l + 1))
+        # print("OK!" + str(l + 1))
+        pass
 
     column = []
     for k in range(7):
