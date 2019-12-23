@@ -25,10 +25,10 @@ def change_color(button):
     row    = button.grid_info()['row']
     column = button.grid_info()['column']
     print("Grid position of 'btn': {} {}".format(row, column))
-    button.configure(highlightbackground='#87CEEB')
+    button.configure(highlightbackground='SkyBlue')
 for i in range(2, height): #Rows
     for j in range(width): #Columns
-        blank = tk.Button(master, width=10, highlightbackground='#FFFACD')
+        blank = tk.Button(master, width=10, highlightbackground='LemonChiffon')
         blank.configure(command=lambda button=blank: change_color(button))
         blank.grid(row=i, column=j)
         
