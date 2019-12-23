@@ -390,5 +390,33 @@ for i in range(15):
     for j in range(14):
         time_final[i].append(0)
 
+# 疊合有空以及有場
 for i in range(15):
-    if 
+    for j in range(14):
+        if i%7 == 0:
+            if time_available[0][j] == 1 and (time_table[i][j] == 1 or time_table_1f[i][j] == 1):
+                time_final[i][j] = 1
+        elif i%7 == 1:
+            if time_available[1][j] == 1 and (time_table[i][j] == 1 or time_table_1f[i][j] == 1):
+                time_final[i][j] = 1
+        elif i%7 == 1:
+            if time_available[2][j] == 1 and (time_table[i][j] == 1 or time_table_1f[i][j] == 1):
+                time_final[i][j] = 1
+        elif i%7 == 1:
+            if time_available[3][j] == 1 and (time_table[i][j] == 1 or time_table_1f[i][j] == 1):
+                time_final[i][j] = 1
+        elif i%7 == 1:
+            if time_available[4][j] == 1 and (time_table[i][j] == 1 or time_table_1f[i][j] == 1):
+                time_final[i][j] = 1
+        elif i%7 == 1:
+            if time_available[5][j] == 1 and (time_table[i][j] == 1 or time_table_1f[i][j] == 1):
+                time_final[i][j] = 1
+        else:
+            if time_available[6][j] == 1 and (time_table[i][j] == 1 or time_table_1f[i][j] == 1):
+                time_final[i][j] = 1
+
+# 印出結果
+print('-'*50)
+print('print time_final')
+for i in range(15):
+    print('Weekday %d : ' %(i+1), time_final[i])
