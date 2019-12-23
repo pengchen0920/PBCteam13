@@ -95,7 +95,10 @@ driver = webdriver.Chrome("/Users/pengchen/Desktop/大四上/商管程設/final_
 
 for l in range(550):
     
-    query_date = "2009/12/18"
+    y = (datetime.datetime(2009, 12, 18) + datetime.timedelta(days= l * 7)).year
+    m = (datetime.datetime(2009, 12, 18) + datetime.timedelta(days= l * 7)).month
+    d = (datetime.datetime(2009, 12, 18) + datetime.timedelta(days= l * 7)).day
+    query_date = str(y) + "/" + str(m) + "/" + str(d)
     
     if l == 0:
         url = 'https://ntupesc.ntu.edu.tw/facilities/PlaceGrd.aspx?nFlag=0&placeSeq=1&dateLst='
