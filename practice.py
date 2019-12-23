@@ -2,9 +2,9 @@ import tkinter as tk
 
 master = tk.Tk()
 
-one = tk.Label(master, text="8:00 - 9:00", width=10)
+one = tk.Label(master, text="08:00 - 09:00", width=10)
 one.grid(row=2, column=0)
-two = tk.Label(master, text="9:00 - 10:00", width=10)
+two = tk.Label(master, text="09:00 - 10:00", width=10)
 two.grid(row=3, column=0)
 three = tk.Label(master, text="10:00 - 11:00", width=10)
 three.grid(row=4, column=0)
