@@ -367,6 +367,7 @@ for i in range(7):
 window.mainloop()
 # print(hit)
 
+# 將點擊資料轉換成有空的時間
 time_available = hit
 for i in range(7):
     for j in range(14):
@@ -391,32 +392,54 @@ for i in range(15):
         time_final[i].append(0)
 
 # 疊合有空以及有場
+weekday_today = datetime.date.today().weekday()
 for i in range(15):
     for j in range(14):
-        if i%7 == 0:
+        if weekday_today%7 == 0:
             if time_available[0][j] == 1 and (time_table[i][j] == 1 or time_table_1f[i][j] == 1):
                 time_final[i][j] = 1
-        elif i%7 == 1:
+        elif weekday_today%7 == 1:
             if time_available[1][j] == 1 and (time_table[i][j] == 1 or time_table_1f[i][j] == 1):
                 time_final[i][j] = 1
-        elif i%7 == 1:
+        elif weekday_today%7 == 2:
             if time_available[2][j] == 1 and (time_table[i][j] == 1 or time_table_1f[i][j] == 1):
                 time_final[i][j] = 1
-        elif i%7 == 1:
+        elif weekday_today%7 == 3:
             if time_available[3][j] == 1 and (time_table[i][j] == 1 or time_table_1f[i][j] == 1):
                 time_final[i][j] = 1
-        elif i%7 == 1:
+        elif weekday_today%7 == 4:
             if time_available[4][j] == 1 and (time_table[i][j] == 1 or time_table_1f[i][j] == 1):
                 time_final[i][j] = 1
-        elif i%7 == 1:
+        elif weekday_today%7 == 5:
             if time_available[5][j] == 1 and (time_table[i][j] == 1 or time_table_1f[i][j] == 1):
                 time_final[i][j] = 1
         else:
             if time_available[6][j] == 1 and (time_table[i][j] == 1 or time_table_1f[i][j] == 1):
                 time_final[i][j] = 1
+    weekday_today += 1
+'''
+print('-'*50)
+print('print time_table')
+for i in range(15):
+    print('Weekday %d : ' %(i+1), time_table[i])
 
+print('-'*50)
+print('print time_table_1f')
+for i in range(15):
+    print('Weekday %d : ' %(i+1), time_table_1f[i])
+'''
 # 印出結果
+date_today = datetime.date.today()
+date_today1 = datetime.date.today()
+
 print('-'*50)
 print('print time_final')
 for i in range(15):
-    print('Weekday %d : ' %(i+1), time_final[i])
+    print('%s : ' %(date_today.strftime('%Y/%m/%d')), time_final[i])
+    date_today += datetime.timedelta(days=1)
+
+print('-'*50)
+for i in range(15):
+    if any(time_final[i]):
+        print('%s : ' % (date_today1.strftime('%Y/%m/%d')), time_final[i])
+    date_today1 += datetime.timedelta(days=1)
