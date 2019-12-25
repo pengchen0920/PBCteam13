@@ -10,38 +10,38 @@ def Available_Count(row):
         if row[0].date().weekday() == i:
             for j in range(14):  # 時段
                 # 一樓
-                if '有場' in (row[j+1]):
-                    if '有場' in firstPeriod[i][j]:
-                        firstPeriod[i][j]['有場'] += 1
+                if searchEvent in (row[j+1]):
+                    if searchEvent in firstPeriod[i][j]:
+                        firstPeriod[i][j][searchEvent] += 1
                     else:
-                        firstPeriod[i][j]['有場'] = 1
+                        firstPeriod[i][j][searchEvent] = 1
                 else:
-                    if '無場' in firstPeriod[i][j]:
-                        firstPeriod[i][j]['無場'] += 1
+                    if 'others' in firstPeriod[i][j]:
+                        firstPeriod[i][j]['others'] += 1
                     else:
-                        firstPeriod[i][j]['無場'] = 1
+                        firstPeriod[i][j]['others'] = 1
                 # 三樓
-                if '有場' in (row[j+15]):
-                    if '有場' in thirdPeriod[i][j]:
-                        thirdPeriod[i][j]['有場'] += 1
+                if searchEvent in (row[j+15]):
+                    if searchEvent in thirdPeriod[i][j]:
+                        thirdPeriod[i][j][searchEvent] += 1
                     else:
-                        thirdPeriod[i][j]['有場'] = 1
+                        thirdPeriod[i][j][searchEvent] = 1
                 else:
-                    if '無場' in thirdPeriod[i][j]:
-                        thirdPeriod[i][j]['無場'] += 1
+                    if 'others' in thirdPeriod[i][j]:
+                        thirdPeriod[i][j]['others'] += 1
                     else:
-                        thirdPeriod[i][j]['無場'] = 1
+                        thirdPeriod[i][j]['others'] = 1
                 # union
-                if '有場' in (row[j+1], row[j+15]):
-                    if '有場' in totalPeriod[i][j]:
-                        totalPeriod[i][j]['有場'] += 1
+                if searchEvent in (row[j+1], row[j+15]):
+                    if searchEvent in totalPeriod[i][j]:
+                        totalPeriod[i][j][searchEvent] += 1
                     else:
-                        totalPeriod[i][j]['有場'] = 1
+                        totalPeriod[i][j][searchEvent] = 1
                 else:
-                    if '無場' in totalPeriod[i][j]:
-                        totalPeriod[i][j]['無場'] += 1
+                    if 'others' in totalPeriod[i][j]:
+                        totalPeriod[i][j]['others'] += 1
                     else:
-                        totalPeriod[i][j]['無場'] = 1
+                        totalPeriod[i][j]['others'] = 1
     return None
 
 
@@ -52,24 +52,25 @@ def Plot_Graph(data, location):
         percent = data[i]
         py.plot(time, percent, label = weekList[i], marker = 'o')
 
-    py.ylim(0, 1)
+    # py.ylim(0, 1)
     py.legend(loc = 'best')
     py.xlabel('Time(hour)')
     py.ylabel('Court Available Percentage')
     if searchYear == -1 and searchMonth == -1:
-        py.title('近十年'+location+'有場機率表')
+        py.title('近十年'+location+searchEvent+'發生機率表')
     if searchYear != -1 and searchMonth == -1:
-        py.title(str(searchYear)+'年全年'+location+'有場機率表')
+        py.title(str(searchYear)+'年全年'+location+searchEvent+'發生機率表')
     if searchYear == -1 and searchMonth != -1:
-        py.title('近十年'+str(searchMonth)+'月'+location+'有場機率表')
+        py.title('近十年'+str(searchMonth)+'月'+location+searchEvent+'發生機率表')
     if searchYear != -1 and searchMonth != -1:
-        py.title(str(searchYear)+'年'+str(searchMonth)+'月'+location+'有場機率表')
+        py.title(str(searchYear)+'年'+str(searchMonth)+'月'+location+searchEvent+'發生機率表')
     py.show()
     return None
 
 
-# 輸入篩選區間
-print('如不需篩選則輸入-1')
+# 輸入欲查詢事件及篩選區間
+searchEvent = input('請輸入欲查詢事件: ')
+print('\n','如不需篩選則輸入-1')
 searchYear = int(input('請輸入欲查詢年份(2010~2019): '))
 searchMonth  = int(input('請輸入欲查詢月份(1~12): '))
 
@@ -139,8 +140,6 @@ for row in rows:
 csvfile.close
 
 print(firstPeriod)
-print()
-print(thirdPeriod)
 
 print('\n', '============================================', '\n')
 
@@ -170,16 +169,16 @@ for i in range(7):
             totalPeriod[i][j][key] = value / total  # 各事件發生機率
 
         # 製圖用data
-        if '有場' in firstPeriod[i][j]:
-            firstData[i].append(firstPeriod[i][j]['有場'])
+        if searchEvent in firstPeriod[i][j]:
+            firstData[i].append(firstPeriod[i][j][searchEvent])
         else:
             firstData[i].append(0)
-        if '有場' in thirdPeriod[i][j]:
-            thirdData[i].append(thirdPeriod[i][j]['有場'])
+        if searchEvent in thirdPeriod[i][j]:
+            thirdData[i].append(thirdPeriod[i][j][searchEvent])
         else:
             thirdData[i].append(0)
-        if '有場' in totalPeriod[i][j]:
-            totalData[i].append(totalPeriod[i][j]['有場'])
+        if searchEvent in totalPeriod[i][j]:
+            totalData[i].append(totalPeriod[i][j][searchEvent])
         else:
             totalData[i].append(0)
 
@@ -189,11 +188,11 @@ print(totalData)
 
 time = timeList
 
-# 一樓有場機率分配圖
+# 一樓event機率分配圖
 Plot_Graph(firstData, '一樓')
 
-# 三樓有場機率分配圖
+# 三樓event機率分配圖
 Plot_Graph(thirdData, '三樓')
 
-# union有場機率分配圖
+# unionevent機率分配圖
 Plot_Graph(totalData, 'union後')
