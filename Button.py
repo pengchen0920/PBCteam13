@@ -39,7 +39,7 @@ time_result = [[None for i in range(14)] for j in range(5)]
 
 for i in range(5):
     for j in range(14):
-        time_button[i][j] = tk.Button(frame_1, text='', bg='gray80', font=('System', 12),
+        time_button[i][j] = tk.Button(frame_1, text='', highlightbackground='LemonChiffon', font=('System', 12),
                                       width=3, height=1, command=functools.partial(time_hit, i, j),
                                       bd=0)
         time_button[i][j].grid(row=j, column=i, padx=1, pady=1, ipadx=5, ipady=5)
