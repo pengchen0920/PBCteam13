@@ -26,6 +26,7 @@ import datetime
 
 
 columns = []
+print('loading...')
 
 # In[63]:
 
@@ -264,7 +265,7 @@ for l in range(3):
 
 # In[61]:
 
-
+driver.close()
 start_pos_1f = 0
 
 for i in range(len(columns_1f)):
@@ -317,65 +318,74 @@ for day in range(15):
 
 # 這裡開始是視窗的部分
 
-# 設定視窗
-window = tk.Tk()
-window.title('Time Selection')
-window.geometry('800x800')
-window.configure(background='white')
 
-top_label = tk.Label(window, text='Choose the time occupied !', bg='white', font=('System', 12))
-top_label.pack()
+class Window:
 
-hit = [[False for i in range(14)] for j in range(7)]
-# print(hit)
+    def __init__(self):
+
+        # 設定視窗
+        self.window = tk.Tk()
+        self.window.title('Time Selection')
+        self.window.geometry('800x800')
+        self.window.configure(background='white')
+
+        self.top_label = tk.Label(self.window, text='Choose the time occupied !', bg='white', font=('System', 12))
+        self.top_label.pack()
+
+        self.hit = [[False for i in range(14)] for j in range(7)]
+
+        # 建立frame
+        self.frame = tk.Frame(self.window, bg='gray99')
+        self.frame.pack()
+        self.frame_1 = tk.Frame(self.frame, bg='gray99')
+        self.frame_2 = tk.Frame(self.frame, bg='gray99')
+        self.frame_1.pack(side='left')
+        self.frame_2.pack(side='right')
+
+        # 建立關閉按鈕
+        self.close_button = tk.Button(self.frame, text='OK!', bg='gray80', font=('System', 12), width=3, height=1,
+                                      command=self.close_window)
+        self.close_button.pack(side='bottom')
+
+        # 建立button & result
+        self.time_button = [[None for i in range(14)] for j in range(7)]
+        self.time_result = [[None for i in range(14)] for j in range(7)]
+
+        for i in range(7):
+            for j in range(14):
+                self.time_button[i][j] = tk.Button(self.frame_1, text='', bg='gray80', font=('System', 12),
+                                              width=3, height=1,
+                                              command=functools.partial(self.time_hit, i, j), bd=0)
+                self.time_button[i][j].grid(row=j, column=i, padx=1, pady=1, ipadx=5, ipady=5)
+
+        # 建立選擇後的狀態
+        for i in range(7):
+            for j in range(14):
+                self.time_result[i][j] = tk.Label(self.frame_2, text='O', bg='spring green', font=('System', 12), width=3,
+                                             height=1)
+                self.time_result[i][j].grid(row=j, column=i, padx=1, pady=1, ipadx=5, ipady=5)
+
+    def time_hit(self, i, j):
+        if not self.hit[i][j]:
+            self.hit[i][j] = True
+            self.time_result[i][j].configure(bg='orange red', text='X')
+        else:
+            self.hit[i][j] = False
+            self.time_result[i][j].configure(bg='spring green', text='O')
+
+    def close_window(self):
+        self.window.destroy()
 
 
-def time_hit(i, j):
-    global hit
-    if not hit[i][j]:
-        hit[i][j] = True
-        time_result[i][j].configure(bg='orange red', text='X')
-    else:
-        hit[i][j] = False
-        time_result[i][j].configure(bg='spring green', text='O')
-
-
-# 建立frame
-frame = tk.Frame(window, bg='gray99')
-frame.pack()
-frame_1 = tk.Frame(frame, bg='gray99')
-frame_2 = tk.Frame(frame, bg='gray99')
-frame_1.pack(side='left')
-frame_2.pack(side='right')
-
-# 建立button & result
-time_button = [[None for i in range(14)] for j in range(7)]
-time_result = [[None for i in range(14)] for j in range(7)]
-
-for i in range(7):
-    for j in range(14):
-        time_button[i][j] = tk.Button(frame_1, text='', bg='gray80', font=('System', 12),
-                                      width=3, height=1, command=functools.partial(time_hit, i, j),
-                                      bd=0)
-        time_button[i][j].grid(row=j, column=i, padx=1, pady=1, ipadx=5, ipady=5)
-
-# 建立選擇後的狀態
-for i in range(7):
-    for j in range(14):
-        time_result[i][j] = tk.Label(frame_2, text='O', bg='spring green', font=('System', 12), width=3, height=1)
-        time_result[i][j].grid(row=j, column=i, padx=1, pady=1, ipadx=5, ipady=5)
-
-window.mainloop()
-# print(hit)
+window1 = Window()
+window1.window.mainloop()
 
 # 將點擊資料轉換成有空的時間
-time_available = hit
+time_available = []
 for i in range(7):
+    time_available.append([])
     for j in range(14):
-        if time_available[i][j]:
-            time_available[i][j] = 0
-        else:
-            time_available[i][j] = 1
+        time_available[i].append(int(not window1.hit[i][j]))
 
 print('-'*50)
 print('0 for occupied, 1 for available.')
@@ -415,11 +425,25 @@ for i in range(15):
 date_today = datetime.date.today()
 date_today1 = datetime.date.today()
 
+
 print('-'*50)
 print('print time_final')
 for i in range(15):
     print('%s : ' %(date_today.strftime('%Y/%m/%d')), time_final[i])
     date_today += datetime.timedelta(days=1)
+
+
+# 疊合過後之剩餘可借場地數量
+final_room = []
+for i in range(15):
+    final_room.append([])
+    for j in range(14):
+        final_room[i].append(time_final[i][j])
+
+for i in range(15):
+    for j in range(14):
+        if final_room[i][j] != 0:
+            final_room[i][j] = 2
 
 print('-'*50)
 print('Below is the time you can book the badminton court in your available time!')
@@ -427,3 +451,5 @@ for i in range(15):
     if any(time_final[i]):
         print('%s : ' % (date_today1.strftime('%Y/%m/%d')), time_final[i])
     date_today1 += datetime.timedelta(days=1)
+
+print(two_weeks_1F)
