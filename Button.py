@@ -339,11 +339,13 @@ class Window:
         self.frame.pack()
         self.frame_1 = tk.Frame(self.frame, bg='gray99')
         self.frame_2 = tk.Frame(self.frame, bg='gray99')
+        self.frame_3 = tk.Frame(self.frame, bg='gray99')
         self.frame_1.pack(side='left')
         self.frame_2.pack(side='right')
+        self.frame_3.pack(side='bottom')
 
         # 建立關閉按鈕
-        self.close_button = tk.Button(self.frame, text='OK!', bg='gray80', font=('System', 12), width=3, height=1,
+        self.close_button = tk.Button(self.frame_3, text='OK!', bg='gray80', font=('System', 12), width=3, height=1,
                                       command=self.close_window)
         self.close_button.pack(side='bottom')
 
@@ -453,3 +455,4 @@ for i in range(15):
     date_today1 += datetime.timedelta(days=1)
 
 print(two_weeks_1F)
+print(final_room)
