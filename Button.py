@@ -170,8 +170,8 @@ from selenium.webdriver.common.keys import Keys
 
 
 columns_1f = []
-# driver = webdriver.Chrome(r"C:\Users\User\Desktop\chromedriver")
-driver = webdriver.Chrome(r"/Users/zizhenli/Downloads/chromedriver")
+driver = webdriver.Chrome(r"C:\Users\User\Desktop\chromedriver")
+# driver = webdriver.Chrome(r"/Users/zizhenli/Downloads/chromedriver")
 
 # In[59]:
 
@@ -347,7 +347,7 @@ class Window:
         
         # 建立新視窗按鈕
         self.create = tk.Button(self.frame_3, text='OK!', bg='gray80', font=('System', 12), width=7, height=1, command=self.create)
-        self.create.pack(side='bottom')
+        # self.create.pack(side='bottom')
 
         # 建立關閉按鈕
         # self.close_button = tk.Button(self.frame_3, text='OK!', bg='gray80', font=('System', 12), width=3, height=1,
@@ -368,8 +368,8 @@ class Window:
         # 建立選擇後的狀態
         for i in range(7):
             for j in range(14):
-                self.time_result[i][j] = tk.Label(self.frame_2, text='O', bg='spring green', font=('System', 12), width=3,
-                                             height=1)
+                self.time_result[i][j] = tk.Label(self.frame_2, text='O', bg='spring green', font=('System', 12),
+                                                  width=3, height=1)
                 self.time_result[i][j].grid(row=j, column=i, padx=1, pady=1, ipadx=5, ipady=5)
      
     # 跳出第二視窗
@@ -428,8 +428,7 @@ class Window:
             for j in range(1, width+1): #Columns
                 blank = tk.Button(second, width=10, highlightbackground='LemonChiffon')
                 blank.grid(row=i, column=j)
-        
-        # self.window.destroy()        
+
 
     def time_hit(self, i, j):
         if not self.hit[i][j]:
@@ -442,7 +441,7 @@ class Window:
     # def close_window(self):
     #     self.window.destroy()
 
-
+# 主程式執行
 window1 = Window()
 window1.window.mainloop()
 
@@ -453,13 +452,14 @@ for i in range(7):
     for j in range(14):
         time_available[i].append(int(not window1.hit[i][j]))
 
+'''
 print('-'*50)
 print('0 for occupied, 1 for available.')
 print('-'*50)
 print('print time_available')
 for i in range(7):
     print('Weekday %d : ' %(i+1), time_available[i])
-
+'''
 
 # 建立最終時間表(有空以及有場(包含1 or 3))
 time_final = []
@@ -476,47 +476,103 @@ for i in range(15):
         if time_available[weekday_temp][j] == 1 and (time_table[i][j] == 1 or time_table_1f[i][j] == 1):
             time_final[i][j] = 1
     weekday_today += 1
-'''
-print('-'*50)
-print('print time_table')
-for i in range(15):
-    print('Weekday %d : ' %(i+1), time_table[i])
 
-print('-'*50)
-print('print time_table_1f')
-for i in range(15):
-    print('Weekday %d : ' %(i+1), time_table_1f[i])
-'''
 # 印出結果
 date_today = datetime.date.today()
 date_today1 = datetime.date.today()
 
-
+'''
 print('-'*50)
 print('print time_final')
 for i in range(15):
     print('%s : ' %(date_today.strftime('%Y/%m/%d')), time_final[i])
     date_today += datetime.timedelta(days=1)
-
+'''
 
 # 疊合過後之剩餘可借場地數量
 final_room = []
 for i in range(15):
     final_room.append([])
     for j in range(14):
-        final_room[i].append(time_final[i][j])
+        if time_final[i][j] == 0:
+            final_room[i].append('x')
+        else:
+            beg = two_weeks_1F[i][j+1].find('(')
+            end = two_weeks_1F[i][j+1].find(')')
+            final_room[i].append(two_weeks_1F[i][j+1][beg:end+1])
+            if two_weeks_1F[i][j+1][beg:end+1] == '':
+                final_room[i][j] += '(0)'
+            beg = two_weeks_3F[i][j+1].find('(')
+            end = two_weeks_3F[i][j+1].find(')')
+            final_room[i][j] += two_weeks_3F[i][j+1][beg:end+1]
+            if two_weeks_3F[i][j+1][beg:end+1] == '':
+                final_room[i][j] += '(0)'
 
-for i in range(15):
-    for j in range(14):
-        if final_room[i][j] != 0:
-            final_room[i][j] = 2
-
+'''
 print('-'*50)
 print('Below is the time you can book the badminton court in your available time!')
 for i in range(15):
     if any(time_final[i]):
-        print('%s : ' % (date_today1.strftime('%Y/%m/%d')), time_final[i])
+        print('%s : ' % (date_today1.strftime('%Y/%m/%d')), final_room[i])
     date_today1 += datetime.timedelta(days=1)
+'''
 
-print(two_weeks_1F)
-print(final_room)
+# print(two_weeks_1F)
+# print(two_weeks_3F)
+
+second = tk.Tk()
+second.geometry('800x800')
+second.title('Python')
+
+one = tk.Label(second, text="08:00 - 09:00", width=10)
+one.grid(row=2, column=0)
+two = tk.Label(second, text="09:00 - 10:00", width=10)
+two.grid(row=3, column=0)
+three = tk.Label(second, text="10:00 - 11:00", width=10)
+three.grid(row=4, column=0)
+four = tk.Label(second, text="11:00 - 12:00", width=10)
+four.grid(row=5, column=0)
+five = tk.Label(second, text="12:00 - 13:00", width=10)
+five.grid(row=6, column=0)
+six = tk.Label(second, text="13:00 - 14:00", width=10)
+six.grid(row=7, column=0)
+seven = tk.Label(second, text="14:00 - 15:00", width=10)
+seven.grid(row=8, column=0)
+eight = tk.Label(second, text="15:00 - 16:00", width=10)
+eight.grid(row=9, column=0)
+nine = tk.Label(second, text="16:00 - 17:00", width=10)
+nine.grid(row=10, column=0)
+ten = tk.Label(second, text="17:00 - 18:00", width=10)
+ten.grid(row=11, column=0)
+ele = tk.Label(second, text="18:00 - 19:00", width=10)
+ele.grid(row=12, column=0)
+tew = tk.Label(second, text="19:00 - 20:00", width=10)
+tew.grid(row=13, column=0)
+thir = tk.Label(second, text="20:00 - 21:00", width=10)
+thir.grid(row=14, column=0)
+fourt = tk.Label(second, text="21:00 - 22:00", width=10)
+fourt.grid(row=15, column=0)
+
+a = tk.Label(second, text="星期一", width=10)
+a.grid(row=1, column=1)
+b = tk.Label(second, text="星期二", width=10)
+b.grid(row=1, column=2)
+c = tk.Label(second, text="星期三", width=10)
+c.grid(row=1, column=3)
+d = tk.Label(second, text="星期四", width=10)
+d.grid(row=1, column=4)
+e = tk.Label(second, text="星期五", width=10)
+e.grid(row=1, column=5)
+f = tk.Label(second, text="星期六", width=10)
+f.grid(row=1, column=6)
+g = tk.Label(second, text="星期日", width=10)
+g.grid(row=1, column=7)
+
+height = 14
+width = 7
+for i in range(2, height+2): #Rows
+    for j in range(1, width+1): #Columns
+        blank = tk.Button(second, text=final_room[j-1][i-2], width=10, highlightbackground='LemonChiffon')
+        blank.grid(row=i, column=j)
+
+second.mainloop()
