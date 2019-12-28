@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import tkinter as tk
+from tkinter import ttk
 import functools
 
 # NOTES:
@@ -170,8 +171,8 @@ from selenium.webdriver.common.keys import Keys
 
 
 columns_1f = []
-# driver = webdriver.Chrome(r"C:\Users\User\Desktop\chromedriver")
-driver = webdriver.Chrome(r"/Users/zizhenli/Downloads/chromedriver")
+driver = webdriver.Chrome(r"C:\Users\User\Desktop\chromedriver")
+# driver = webdriver.Chrome(r"/Users/zizhenli/Downloads/chromedriver")
 
 # In[59]:
 
@@ -330,17 +331,17 @@ class Window:
         self.window.title('Time Selection')
         self.window.geometry('1200x1200')
 
-        self.top_label = tk.Label(self.window, text='請將您沒空閒的時間設為紅色!', font=('System', 12))
+        self.top_label = ttk.Label(self.window, text='請將您空閒的時間設為綠色!')
         self.top_label.pack()
 
         self.hit = [[False for i in range(14)] for j in range(7)]
 
         # 建立frame
-        self.frame = tk.Frame(self.window)
+        self.frame = ttk.Frame(self.window)
         self.frame.pack()
-        self.frame_0 = tk.Frame(self.frame)
-        self.frame_1 = tk.Frame(self.frame)
-        self.frame_2 = tk.Frame(self.frame)
+        self.frame_0 = ttk.Frame(self.frame)
+        self.frame_1 = ttk.Frame(self.frame)
+        self.frame_2 = ttk.Frame(self.frame)
         self.frame_0.pack(side='top')
         self.frame_1.pack(side='top')
         self.frame_2.pack(side='bottom')
@@ -356,33 +357,33 @@ class Window:
         self.window.config(menu=self.menubar)
 
         # 建立時間標籤
-        self.one = tk.Label(self.frame_1, text="08:00 - 09:00", width=10)
+        self.one = ttk.Label(self.frame_1, text="08:00 - 09:00", width=10)
         self.one.grid(row=2, column=0)
-        self.two = tk.Label(self.frame_1, text="09:00 - 10:00", width=10)
+        self.two = ttk.Label(self.frame_1, text="09:00 - 10:00", width=10)
         self.two.grid(row=3, column=0)
-        self.three = tk.Label(self.frame_1, text="10:00 - 11:00", width=10)
+        self.three = ttk.Label(self.frame_1, text="10:00 - 11:00", width=10)
         self.three.grid(row=4, column=0)
-        self.four = tk.Label(self.frame_1, text="11:00 - 12:00", width=10)
+        self.four = ttk.Label(self.frame_1, text="11:00 - 12:00", width=10)
         self.four.grid(row=5, column=0)
-        self.five = tk.Label(self.frame_1, text="12:00 - 13:00", width=10)
+        self.five = ttk.Label(self.frame_1, text="12:00 - 13:00", width=10)
         self.five.grid(row=6, column=0)
-        self.six = tk.Label(self.frame_1, text="13:00 - 14:00", width=10)
+        self.six = ttk.Label(self.frame_1, text="13:00 - 14:00", width=10)
         self.six.grid(row=7, column=0)
-        self.seven = tk.Label(self.frame_1, text="14:00 - 15:00", width=10)
+        self.seven = ttk.Label(self.frame_1, text="14:00 - 15:00", width=10)
         self.seven.grid(row=8, column=0)
-        self.eight = tk.Label(self.frame_1, text="15:00 - 16:00", width=10)
+        self.eight = ttk.Label(self.frame_1, text="15:00 - 16:00", width=10)
         self.eight.grid(row=9, column=0)
-        self.nine = tk.Label(self.frame_1, text="16:00 - 17:00", width=10)
+        self.nine = ttk.Label(self.frame_1, text="16:00 - 17:00", width=10)
         self.nine.grid(row=10, column=0)
-        self.ten = tk.Label(self.frame_1, text="17:00 - 18:00", width=10)
+        self.ten = ttk.Label(self.frame_1, text="17:00 - 18:00", width=10)
         self.ten.grid(row=11, column=0)
-        self.ele = tk.Label(self.frame_1, text="18:00 - 19:00", width=10)
+        self.ele = ttk.Label(self.frame_1, text="18:00 - 19:00", width=10)
         self.ele.grid(row=12, column=0)
-        self.tew = tk.Label(self.frame_1, text="19:00 - 20:00", width=10)
+        self.tew = ttk.Label(self.frame_1, text="19:00 - 20:00", width=10)
         self.tew.grid(row=13, column=0)
-        self.thir = tk.Label(self.frame_1, text="20:00 - 21:00", width=10)
+        self.thir = ttk.Label(self.frame_1, text="20:00 - 21:00", width=10)
         self.thir.grid(row=14, column=0)
-        self.fourt = tk.Label(self.frame_1, text="21:00 - 22:00", width=10)
+        self.fourt = ttk.Label(self.frame_1, text="21:00 - 22:00", width=10)
         self.fourt.grid(row=15, column=0)
 
         self.weekday = [None for i in range(7)]
@@ -393,8 +394,7 @@ class Window:
         self.result_button = [[None for i in range(14)] for j in range(15)]
 
         # 建立關閉按鈕
-        self.close_button = tk.Button(self.frame_2, text='OK!', bg='gray80', font=('System', 12), width=3, height=1,
-                                      command=self.close_window)
+        self.close_button = ttk.Button(self.frame_2, text='OK!', command=self.close_window)
         self.close_button.pack(side='bottom')
 
     def create_statistic(self):
@@ -402,47 +402,90 @@ class Window:
         window_statistic.title('歷史統計資料查詢')
         window_statistic.geometry('800x800')
 
+        top_frame = ttk.Frame(window_statistic)
+        top_frame.pack(side='top')
+        top_label = ttk.Label(top_frame, text='歷史統計資料查詢')
+        top_label.pack(side='top')
+
+
     def create_prediction(self):
-        window_statistic = tk.Toplevel()
-        window_statistic.title('未來有無場地預測')
-        window_statistic.geometry('800x800')
+        window_prediction = tk.Toplevel()
+        window_prediction.title('未來有無場地預測')
+        window_prediction.geometry('800x800')
+
+        top_frame = ttk.Frame(window_prediction)
+        top_frame.pack(side='top')
+        text_frame = ttk.Frame(window_prediction)
+        text_frame.pack(side='top')
+        button_frame = ttk.Frame(window_prediction)
+        button_frame.pack(side='top')
+        result_frame = ttk.Frame(window_prediction)
+        result_frame.pack(side='top')
+        top_label = ttk.Label(top_frame, text='未來有無場地預測')
+        top_label.pack(side='top')
+
+        result_num = [ttk.Label(result_frame, text='x') for i in range(3)]
+        finish_button = ttk.Button(button_frame, text='Submit!', command=functools.partial(self.get_result, result_num))
+        finish_button.pack()
+        result = [ttk.Label(result_frame, text='無場機率: '), ttk.Label(result_frame, text='有場機率: '),
+                  ttk.Label(result_frame, text='最終判定: ')]
+        for i in range(3):
+            result[i].grid(row=i, column=0)
+            result_num[i].grid(row=i, column=1)
+
+        text_label = []
+        input_entry = []
+        text_label.append(ttk.Label(text_frame, text='樓層(1 or 3): '))
+        text_label.append(ttk.Label(text_frame, text='月份(1 ~ 12): '))
+        text_label.append(ttk.Label(text_frame, text='星期(1 ~ 7): '))
+        text_label.append(ttk.Label(text_frame, text='時間(8 ~ 21): '))
+
+        for i in range(4):
+            input_entry.append(ttk.Entry(text_frame, width=10))
+
+        for i in range(4):
+            text_label[i].grid(row=i, column=0)
+            input_entry[i].grid(row=i, column=1)
+
+    def get_result(self, num):
+        for i in range(3):
+            num[i].config(text='000')
 
     def create_fifteen_days(self, content):
         for i in range(15):
-            self.fifteen_days[i] = tk.Label(self.frame_1, text=content[i], width=5, font=('System', 12))
+            self.fifteen_days[i] = tk.Label(self.frame_1, text=content[i], width=5)
             self.fifteen_days[i].grid(row=1, column=i + 1)
 
     def create_weekday(self, content):
         for i in range(7):
-            self.weekday[i] = tk.Label(self.frame_1, text=content[i], width=5, font=('System', 12))
+            self.weekday[i] = tk.Label(self.frame_1, text=content[i], width=5)
             self.weekday[i].grid(row=1, column=i + 1)
 
     def create_button(self):
         for i in range(7):
             for j in range(14):
-                self.time_button[i][j] = tk.Button(self.frame_1, text='O', highlightbackground='light sea green', font=('System', 12),
+                self.time_button[i][j] = tk.Button(self.frame_1, text='X', highlightbackground='coral',
                                                    width=5, command=functools.partial(self.time_hit, i, j))
                 self.time_button[i][j].grid(row=j + 2, column=i + 1, padx=0)
 
     def create_result(self, content):
-        self.description = tk.Label(self.frame_0, text = '(一樓剩場)(三樓剩場)')
+        self.description = ttk.Label(self.frame_0, text = '(一樓剩場)(三樓剩場)')
         self.description.pack(side='top')
         for i in range(15):
             for j in range(14):
                 self.result_button[i][j] = tk.Button(self.frame_1, text=content[i][j], highlightbackground='light sea green',
-                                                     font=('System', 12), width=5,
-                                                     command=None)
-                if content[i][j] == 'x':
+                                                     width=5, command=None)
+                if content[i][j] == 'X':
                     self.result_button[i][j].configure(highlightbackground='coral')
                 self.result_button[i][j].grid(row=j + 2, column=i + 1, padx=0)
 
     def time_hit(self, i, j):
         if not self.hit[i][j]:
             self.hit[i][j] = True
-            self.time_button[i][j].configure(highlightbackground='coral', text='X')
+            self.time_button[i][j].configure(highlightbackground='light sea green', text='O')
         else:
             self.hit[i][j] = False
-            self.time_button[i][j].configure(highlightbackground='light sea green', text='O')
+            self.time_button[i][j].configure(highlightbackground='coral', text='X')
 
     def open_web(self):
         driver.get(url)
@@ -464,7 +507,7 @@ time_available = []
 for i in range(7):
     time_available.append([])
     for j in range(14):
-        time_available[i].append(int(not window1.hit[i][j]))
+        time_available[i].append(int(window1.hit[i][j]))
 
 
 # 建立最終時間表(有空以及有場(包含1 or 3))
@@ -496,7 +539,7 @@ for i in range(15):
     final_room.append([])
     for j in range(14):
         if time_final[i][j] == 0:
-            final_room[i].append('x')
+            final_room[i].append('X')
         else:
             beg = two_weeks_1F[i][j + 1].find('(')
             end = two_weeks_1F[i][j + 1].find(')')
