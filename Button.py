@@ -170,8 +170,8 @@ from selenium.webdriver.common.keys import Keys
 
 
 columns_1f = []
-driver = webdriver.Chrome(r"C:\Users\User\Desktop\chromedriver")
-# driver = webdriver.Chrome(r"/Users/zizhenli/Downloads/chromedriver")
+# driver = webdriver.Chrome(r"C:\Users\User\Desktop\chromedriver")
+driver = webdriver.Chrome(r"/Users/zizhenli/Downloads/chromedriver")
 
 # In[59]:
 
@@ -420,7 +420,7 @@ class Window:
     def create_button(self):
         for i in range(7):
             for j in range(14):
-                self.time_button[i][j] = tk.Button(self.frame_1, text='O', bg='light sea green', font=('System', 12),
+                self.time_button[i][j] = tk.Button(self.frame_1, text='O', highlightbackground='light sea green', font=('System', 12),
                                                    width=5, command=functools.partial(self.time_hit, i, j))
                 self.time_button[i][j].grid(row=j + 2, column=i + 1, padx=0)
 
@@ -429,20 +429,20 @@ class Window:
         self.description.pack(side='top')
         for i in range(15):
             for j in range(14):
-                self.result_button[i][j] = tk.Button(self.frame_1, text=content[i][j], bg='light sea green',
+                self.result_button[i][j] = tk.Button(self.frame_1, text=content[i][j], highlightbackground='light sea green',
                                                      font=('System', 12), width=5,
                                                      command=None)
                 if content[i][j] == 'x':
-                    self.result_button[i][j].configure(bg='coral')
+                    self.result_button[i][j].configure(highlightbackground='coral')
                 self.result_button[i][j].grid(row=j + 2, column=i + 1, padx=0)
 
     def time_hit(self, i, j):
         if not self.hit[i][j]:
             self.hit[i][j] = True
-            self.time_button[i][j].configure(bg='coral', text='X')
+            self.time_button[i][j].configure(highlightbackground='coral', text='X')
         else:
             self.hit[i][j] = False
-            self.time_button[i][j].configure(bg='light sea green', text='O')
+            self.time_button[i][j].configure(highlightbackground='light sea green', text='O')
 
     def open_web(self):
         driver.get(url)
