@@ -170,8 +170,8 @@ from selenium.webdriver.common.keys import Keys
 
 
 columns_1f = []
-# driver = webdriver.Chrome(r"C:\Users\User\Desktop\chromedriver")
-driver = webdriver.Chrome(r"/Users/zizhenli/Downloads/chromedriver")
+driver = webdriver.Chrome(r"C:\Users\User\Desktop\chromedriver")
+# driver = webdriver.Chrome(r"/Users/zizhenli/Downloads/chromedriver")
 
 # In[59]:
 
@@ -330,7 +330,7 @@ class Window:
         self.window.title('Time Selection')
         self.window.geometry('1200x1200')
 
-        self.top_label = tk.Label(self.window, text='Choose the time occupied !', font=('System', 12))
+        self.top_label = tk.Label(self.window, text='請將您沒空閒的時間設為紅色!', font=('System', 12))
         self.top_label.pack()
 
         self.hit = [[False for i in range(14)] for j in range(7)]
@@ -338,10 +338,13 @@ class Window:
         # 建立frame
         self.frame = tk.Frame(self.window)
         self.frame.pack()
+        self.frame_0 = tk.Frame(self.frame)
         self.frame_1 = tk.Frame(self.frame)
         self.frame_2 = tk.Frame(self.frame)
+        self.frame_0.pack(side='top')
         self.frame_1.pack(side='top')
         self.frame_2.pack(side='bottom')
+        self.description = None
 
         # 建立時間標籤
         self.one = tk.Label(self.frame_1, text="08:00 - 09:00", width=10)
@@ -402,98 +405,29 @@ class Window:
     def create_button(self):
         for i in range(7):
             for j in range(14):
+                self.time_button[i][j] = tk.Button(self.frame_1, text='O', bg='spring green', font=('System', 12),
+                                                   width=5, command=functools.partial(self.time_hit, i, j))
+                self.time_button[i][j].grid(row=j + 2, column=i + 1, padx=0)
 
-<< << << < HEAD
-self.time_button[i][j] = tk.Button(self.frame_1, text='O', bg='spring green', font=('System', 12),
-                                   width=5, command=functools.partial(self.time_hit, i, j))
-self.time_button[i][j].grid(row=j + 2, column=i + 1, padx=0)
-== == == =
-self.time_result[i][j] = tk.Label(self.frame_2, text='O', bg='spring green', font=('System', 12),
-                                  width=3, height=1)
-self.time_result[i][j].grid(row=j, column=i, padx=1, pady=1, ipadx=5, ipady=5)
+    def create_result(self, content):
+        self.description = tk.Label(self.frame_0, text = '(一樓剩場)(三樓剩場)')
+        self.description.pack(side='top')
+        for i in range(15):
+            for j in range(14):
+                self.result_button[i][j] = tk.Button(self.frame_1, text=content[i][j], bg='spring green',
+                                                     font=('System', 12), width=5,)
+                self.result_button[i][j].grid(row=j + 2, column=i + 1, padx=0)
 
+    def time_hit(self, i, j):
+        if not self.hit[i][j]:
+            self.hit[i][j] = True
+            self.time_button[i][j].configure(bg='orange red', text='X')
+        else:
+            self.hit[i][j] = False
+            self.time_button[i][j].configure(bg='spring green', text='O')
 
-# 跳出第二視窗
-def create(self):
-    second = tk.Toplevel()
-    second.geometry('800x800')
-    second.title('Python')
-
-    one = tk.Label(second, text="08:00 - 09:00", width=10)
-    one.grid(row=2, column=0)
-    two = tk.Label(second, text="09:00 - 10:00", width=10)
-    two.grid(row=3, column=0)
-    three = tk.Label(second, text="10:00 - 11:00", width=10)
-    three.grid(row=4, column=0)
-    four = tk.Label(second, text="11:00 - 12:00", width=10)
-    four.grid(row=5, column=0)
-    five = tk.Label(second, text="12:00 - 13:00", width=10)
-    five.grid(row=6, column=0)
-    six = tk.Label(second, text="13:00 - 14:00", width=10)
-    six.grid(row=7, column=0)
-    seven = tk.Label(second, text="14:00 - 15:00", width=10)
-    seven.grid(row=8, column=0)
-    eight = tk.Label(second, text="15:00 - 16:00", width=10)
-    eight.grid(row=9, column=0)
-    nine = tk.Label(second, text="16:00 - 17:00", width=10)
-    nine.grid(row=10, column=0)
-    ten = tk.Label(second, text="17:00 - 18:00", width=10)
-    ten.grid(row=11, column=0)
-    ele = tk.Label(second, text="18:00 - 19:00", width=10)
-    ele.grid(row=12, column=0)
-    tew = tk.Label(second, text="19:00 - 20:00", width=10)
-    tew.grid(row=13, column=0)
-    thir = tk.Label(second, text="20:00 - 21:00", width=10)
-    thir.grid(row=14, column=0)
-    fourt = tk.Label(second, text="21:00 - 22:00", width=10)
-    fourt.grid(row=15, column=0)
-
-    a = tk.Label(second, text="星期一", width=10)
-    a.grid(row=1, column=1)
-    b = tk.Label(second, text="星期二", width=10)
-    b.grid(row=1, column=2)
-    c = tk.Label(second, text="星期三", width=10)
-    c.grid(row=1, column=3)
-    d = tk.Label(second, text="星期四", width=10)
-    d.grid(row=1, column=4)
-    e = tk.Label(second, text="星期五", width=10)
-    e.grid(row=1, column=5)
-    f = tk.Label(second, text="星期六", width=10)
-    f.grid(row=1, column=6)
-    g = tk.Label(second, text="星期日", width=10)
-    g.grid(row=1, column=7)
-
-    height = 14
-    width = 7
-    for i in range(2, height + 2):  # Rows
-        for j in range(1, width + 1):  # Columns
-            blank = tk.Button(second, width=10, highlightbackground='LemonChiffon')
-            blank.grid(row=i, column=j)
-
->> >> >> > 4
-f20476cdac77527c2dd517d9c5c6e9c1b319165
-
-
-def create_result(self, content):
-    for i in range(15):
-        for j in range(14):
-            self.result_button[i][j] = tk.Button(self.frame_1, text=content[i][j], bg='spring green',
-                                                 font=('System', 12), width=5,
-                                                 command=functools.partial(self.time_hit, i, j))
-            self.result_button[i][j].grid(row=j + 2, column=i + 1, padx=0)
-
-
-def time_hit(self, i, j):
-    if not self.hit[i][j]:
-        self.hit[i][j] = True
-        self.time_button[i][j].configure(bg='orange red', text='X')
-    else:
-        self.hit[i][j] = False
-        self.time_button[i][j].configure(bg='spring green', text='O')
-
-
-def close_window(self):
-    self.window.destroy()
+    def close_window(self):
+        self.window.destroy()
 
 
 weekday = ['星期一', '星期二', '星期三', '星期四', '星期五', '星期六', '星期日']
@@ -511,14 +445,6 @@ for i in range(7):
     for j in range(14):
         time_available[i].append(int(not window1.hit[i][j]))
 
-'''
-print('-'*50)
-print('0 for occupied, 1 for available.')
-print('-'*50)
-print('print time_available')
-for i in range(7):
-    print('Weekday %d : ' %(i+1), time_available[i])
-'''
 
 # 建立最終時間表(有空以及有場(包含1 or 3))
 time_final = []
@@ -584,7 +510,8 @@ for i in range(15):
 # print(two_weeks_3F)
 
 window2 = Window()
-window2.top_label.configure(text='This is the room you can book in your available time!')
+window2.top_label.configure(text='圖表顯示在您的空閒時間中，新體羽球場之剩餘場數')
 window2.create_fifteen_days(fifteen_days)
 window2.create_result(final_room)
 window2.window.mainloop()
+
