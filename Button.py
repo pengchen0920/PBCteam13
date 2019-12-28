@@ -374,7 +374,7 @@ class Window:
      
     # 跳出第二視窗
     def create(self):
-        second = tk.Ｔoplevel()
+        second = tk.Toplevel()
         second.geometry('800x800')
         second.title('Python')
 
