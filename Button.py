@@ -146,7 +146,7 @@ for i in range(15):
 
 for day in range(15):
     for j in range(1, 15):
-        if (("有場" in two_weeks_3F[day][j]) or (two_weeks_3F[day][j].count("(") == 2)):
+        if ("有場" in two_weeks_3F[day][j]) or (two_weeks_3F[day][j].count("(") == 2):
             time_table[day].append(1)
         else:
             time_table[day].append(0)
@@ -202,14 +202,14 @@ for l in range(3):
 
         time.sleep(0.5)
         # click "search" button
-        driver.find_element(By.ID, ("ctl00_ContentPlaceHolder1_tcTab_tpValidator_ImageButton1")).click()
+        driver.find_element(By.ID, "ctl00_ContentPlaceHolder1_tcTab_tpValidator_ImageButton1").click()
 
         # close div dialog
         driver.find_element_by_xpath("//span[@class='ui-button-icon ui-icon ui-icon-closethick']").click()
 
         time.sleep(0.2)
         # send query_date "re-send"
-        driver.find_element(By.ID, ("ctl00_ContentPlaceHolder1_tcTab_tpValidator_txtDateQry")).send_keys(query_date)
+        driver.find_element(By.ID, "ctl00_ContentPlaceHolder1_tcTab_tpValidator_txtDateQry").send_keys(query_date)
 
         time.sleep(0.5)
         # click "search" button
@@ -222,7 +222,7 @@ for l in range(3):
 
         time.sleep(0.2)
         # click next week
-        driver.find_element(By.ID, ("ctl00_ContentPlaceHolder1_lblNextWeek")).click()
+        driver.find_element(By.ID, "ctl00_ContentPlaceHolder1_lblNextWeek").click()
 
     time.sleep(0.5)
     page = driver.page_source
@@ -346,6 +346,15 @@ class Window:
         self.frame_2.pack(side='bottom')
         self.description = None
 
+        # 建立menu
+        self.menubar = tk.Menu(self.window)
+        self.filemenu = tk.Menu(self.menubar, tearoff=0)
+        self.menubar.add_cascade(label='Menu', menu=self.filemenu)
+        self.filemenu.add_command(label='歷史統計資料查詢', command=self.create_statistic)
+        self.filemenu.add_command(label='未來有無場地預測', command=self.create_prediction)
+
+        self.window.config(menu=self.menubar)
+
         # 建立時間標籤
         self.one = tk.Label(self.frame_1, text="08:00 - 09:00", width=10)
         self.one.grid(row=2, column=0)
@@ -383,14 +392,20 @@ class Window:
         self.time_button = [[None for i in range(14)] for j in range(7)]
         self.result_button = [[None for i in range(14)] for j in range(15)]
 
-        # 建立新視窗按鈕
-        # self.create = tk.Button(self.frame_2, text='OK!', bg='gray80', font=('System', 12), width=7, height=1, command=self.create)
-        # self.create.pack(side='bottom')
-
         # 建立關閉按鈕
         self.close_button = tk.Button(self.frame_2, text='OK!', bg='gray80', font=('System', 12), width=3, height=1,
                                       command=self.close_window)
         self.close_button.pack(side='bottom')
+
+    def create_statistic(self):
+        window_statistic = tk.Toplevel()
+        window_statistic.title('歷史統計資料查詢')
+        window_statistic.geometry('800x800')
+
+    def create_prediction(self):
+        window_statistic = tk.Toplevel()
+        window_statistic.title('未來有無場地預測')
+        window_statistic.geometry('800x800')
 
     def create_fifteen_days(self, content):
         for i in range(15):
@@ -415,7 +430,10 @@ class Window:
         for i in range(15):
             for j in range(14):
                 self.result_button[i][j] = tk.Button(self.frame_1, text=content[i][j], bg='spring green',
-                                                     font=('System', 12), width=5,)
+                                                     font=('System', 12), width=5,
+                                                     command=None)
+                if content[i][j] == 'x':
+                    self.result_button[i][j].configure(bg='orange red')
                 self.result_button[i][j].grid(row=j + 2, column=i + 1, padx=0)
 
     def time_hit(self, i, j):
@@ -425,6 +443,9 @@ class Window:
         else:
             self.hit[i][j] = False
             self.time_button[i][j].configure(bg='spring green', text='O')
+
+    def open_web(self):
+        driver.get(url)
 
     def close_window(self):
         self.window.destroy()
@@ -462,21 +483,12 @@ for i in range(15):
             time_final[i][j] = 1
     weekday_today += 1
 
-# 印出結果
+# 產生日期(兩周)
 date_today = datetime.date.today()
-date_today1 = datetime.date.today()
 fifteen_days = []
 for i in range(15):
     fifteen_days.append(date_today.strftime('%m/%d'))
     date_today += datetime.timedelta(days=1)
-
-'''
-print('-'*50)
-print('print time_final')
-for i in range(15):
-    print('%s : ' %(date_today.strftime('%Y/%m/%d')), time_final[i])
-    date_today += datetime.timedelta(days=1)
-'''
 
 # 疊合過後之剩餘可借場地數量
 final_room = []
@@ -497,20 +509,8 @@ for i in range(15):
             if two_weeks_3F[i][j + 1][beg:end + 1] == '':
                 final_room[i][j] += '(0)'
 
-'''
-print('-'*50)
-print('Below is the time you can book the badminton court in your available time!')
-for i in range(15):
-    if any(time_final[i]):
-        print('%s : ' % (date_today1.strftime('%Y/%m/%d')), final_room[i])
-    date_today1 += datetime.timedelta(days=1)
-'''
-
-# print(two_weeks_1F)
-# print(two_weeks_3F)
-
 window2 = Window()
-window2.top_label.configure(text='圖表顯示在您的空閒時間中，新體羽球場之剩餘場數')
+window2.top_label.configure(text='圖表顯示在您的空閒時間中，接下來兩周，新體羽球場之剩餘場數')
 window2.create_fifteen_days(fifteen_days)
 window2.create_result(final_room)
 window2.window.mainloop()
