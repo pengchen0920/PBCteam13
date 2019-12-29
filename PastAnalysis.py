@@ -6,10 +6,9 @@ import matplotlib.pyplot as py
 def Text_Analysis(dataList):
 
     # filename放csv網址，請自行修改
-    fileName = 'Users\\zizhenli\\Documents\\GitHub\\PBCteam13\\badminton_1n3F_10y_NEW.csv'
-    csvfile = open(fileName, 'r', encoding='ANSI')
+    fileName = '/Users/zizhenli/Documents/GitHub/PBCteam13/badminton_1n3F_10y.csv'
+    csvfile = open(fileName, 'r', encoding='utf-8')
     rows = csv.reader(csvfile)
-
     # Period[i][j]-->一樓星期i的第j時段
     firstPeriod, thirdPeriod, totalPeriod = [], [], []
     for i in range(7):
@@ -66,6 +65,9 @@ def Text_Analysis(dataList):
         searchWeek = int(input('請輸入欲查詢星期(1~7): '))
         searchHour = int(input('請輸入欲查詢時段(8~21): '))
     '''
+    print("1",dataList)
+    print(dataList[0])
+
     searchWeek = dataList[0]
     searchHour = dataList[1]
 
