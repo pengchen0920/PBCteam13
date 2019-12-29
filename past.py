@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 import functools
+import PastAnalysis as PA
  
 # app = tk.Tk() 
 # app.geometry('1200x1200')
@@ -80,21 +81,26 @@ def create_two():
     w.geometry('600x600')
     w.title('result')
 
+    dataList = []
+
     t_a = tk.Label(w, text="請輸入欲查詢樓層(0,1,3) (如不需篩選則輸入-1):")
     t_a.grid(row=0, column=0)
     a = tk.Entry(w,width=30,fg="black")
     a.grid(row=0, column=1)
 
+
     def enter_event1(event):
         def enter_event2(event):
             if (b.get()):
+                dataList.append(b.get())
                 t_c = tk.Label(w, text="請輸入欲查詢月份(1~12):")
                 t_c.grid(row=2, column=0)
                 c = tk.Entry(w,width=30,fg="black")
                 c.grid(row=2, column=1)
-                done = tk.Button(w, text='完成', width=10, height=1, font=('Helvetica', 18), command=functools.partial(PA.Text_Analysis, dataList))
+                done = tk.Button(w, text='完成', width=10, height=1, font=('Helvetica', 18), command=functools.partial(PA.Text_Analysis, dataList.append(c.get())))
                 done.grid(row=3, column=1)
         if (a.get()):
+            dataList.append(a.get())
             t_b = tk.Label(w, text="請輸入欲查詢年份(2010~2019):")
             t_b.grid(row=1, column=0)
             b = tk.Entry(w,width=30,fg="black")
