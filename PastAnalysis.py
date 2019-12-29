@@ -74,54 +74,9 @@ def Text_Analysis(dataList):
 
     # 計算事件發生總次數，並以總次數計算各事件發生機率
     # 星期i 時段j
-    if precsiseSearch in('y', 'Y'):
-        for i in range(7):
-            for j in range(14):
-                if i == searchWeek-1 and j == searchHour-8:
-                    print(weekList[i], timeList[j], '\n')
-                    # 一樓
-                    total = sum(firstPeriod[i][j].values())  # 星期i時段j中的事件總次數
-                    for key, value in firstPeriod[i][j].items():
-                        firstPeriod[i][j][key] = value / total  # 各事件發生機率
-                    sortedfirstPeriod = (sorted(firstPeriod[i][j].items(), key=lambda d: -d[1]))  # 按機率大小排序
-                    if '有場' in firstPeriod[i][j]:  # 印出有場機率
-                        print('　　一樓有場機率:', '%.2f' % (firstPeriod[i][j]['有場'] * 100)+'%')
-                    else:
-                        print('　　一樓有場機率: 0.00%')
-                    print()
-                    for k in range(5):  # 印出前五高的事件及其機率
-                        print('　　　　', sortedfirstPeriod[k][0], '%.2f' % (sortedfirstPeriod[k][1] * 100)+'%')
-                    print()
-                    # 三樓
-                    total = sum(thirdPeriod[i][j].values())  # 星期i時段j中的事件總次數
-                    for key, value in thirdPeriod[i][j].items():
-                        thirdPeriod[i][j][key] = value / total  # 各事件發生機率
-                    sortedthirdPeriod = (sorted(thirdPeriod[i][j].items(), key=lambda d: -d[1]))  # 按機率大小排序
-                    if '有場' in thirdPeriod[i][j]:  # 印出有場機率
-                        print('　　三樓有場機率:', '%.2f' % (thirdPeriod[i][j]['有場'] * 100)+'%')
-                    else:
-                        print('　　三樓有場機率: 0.00%')
-                    print()
-                    for k in range(5):  # 印出前五高的事件及其機率
-                        print('　　　　', sortedthirdPeriod[k][0], '%.2f' % (sortedthirdPeriod[k][1] * 100)+'%')
-                    print()
-                    # union
-                    total = sum(totalPeriod[i][j].values())  # 星期i時段j中的事件總次數
-
-                    for key, value in totalPeriod[i][j].items():
-                        totalPeriod[i][j][key] = value / total  # 各事件發生機率
-
-                    sortedTotalPeriod = (sorted(totalPeriod[i][j].items(), key=lambda d: -d[1]))  # 按機率大小排序
-                    if '有場' in totalPeriod[i][j]:  # 印出有場機率
-                        print('　　union後有場機率:', '%.2f' % (totalPeriod[i][j]['有場'] * 100)+'%')
-                    else:
-                        print('　　union後有場機率: 0.00%')
-                    print()
-
-    if preciseSearch in('n', 'N'):
-        for i in range(7):
-            for j in range(14):
-
+    for i in range(7):
+        for j in range(14):
+            if i == searchWeek-1 and j == searchHour-8:
                 print(weekList[i], timeList[j], '\n')
                 # 一樓
                 total = sum(firstPeriod[i][j].values())  # 星期i時段j中的事件總次數
@@ -151,8 +106,10 @@ def Text_Analysis(dataList):
                 print()
                 # union
                 total = sum(totalPeriod[i][j].values())  # 星期i時段j中的事件總次數
+
                 for key, value in totalPeriod[i][j].items():
                     totalPeriod[i][j][key] = value / total  # 各事件發生機率
+
                 sortedTotalPeriod = (sorted(totalPeriod[i][j].items(), key=lambda d: -d[1]))  # 按機率大小排序
                 if '有場' in totalPeriod[i][j]:  # 印出有場機率
                     print('　　union後有場機率:', '%.2f' % (totalPeriod[i][j]['有場'] * 100)+'%')
@@ -1059,5 +1016,4 @@ def Multi_Event_Analysis_Month(dataList):
         Plot_Graph(firstKey, firstValue, '一樓')
     elif searchFloor == 3:
         Plot_Graph(thirdKey, thirdValue, '三樓')
-
 
