@@ -451,7 +451,7 @@ class Window:
             text_label[i].grid(row=i, column=0)
             input_entry[i].grid(row=i, column=1)
 
-        img = ImageTk.PhotoImage(Image.open('True1.gif'))
+        img = ImageTk.PhotoImage(Image.open('bmwe3-n8j6o.gif'))
         image= tk.Label(window_prediction, image=img)
         image.pack(side='bottom', fill = 'both', expand = 'yes')
 
