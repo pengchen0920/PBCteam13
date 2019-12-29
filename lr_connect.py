@@ -56,9 +56,9 @@ def lr_predict(logistic_model):
     data_input.iloc[0][input_weekday + 13] = 1
     data_input.iloc[0][input_time + 13] = 1
 
-
-    final_result = lr.predict(data_input)
-    predict_result_per = np.round(lr.predict_proba(data_input),3)
+    
+    final_result = logistic_model.predict(data_input)
+    predict_result_per = np.round(logistic_model.predict_proba(data_input),3)
     print("無場機率：" , predict_result_per[0][0], "/ 有場機率：", predict_result_per[0][1])
 
     print("最終判定", end = "")
@@ -66,10 +66,4 @@ def lr_predict(logistic_model):
         print("無場！")
     else:
         print("有場！")
-
-while True:
-  try:
-    lr_predict(lr)
-  except:
-    lr = lr_training()
 
