@@ -334,7 +334,7 @@ class Window:
         self.window.title('Time Selection')
         self.window.geometry('1200x1200')
 
-        self.top_label = ttk.Label(self.window, text='請將您空閒的時間設為綠色!')
+        self.top_label = tk.Label(self.window, text='請將您空閒的時間設為綠色!')
         self.top_label.pack()
 
         self.hit = [[False for i in range(14)] for j in range(7)]
@@ -399,6 +399,8 @@ class Window:
         # 建立關閉按鈕
         self.close_button = ttk.Button(self.frame_2, text='OK!', command=self.close_window)
         self.close_button.pack(side='bottom')
+        self.all_button = ttk.Button(self.frame_2, text='Change all!', command=self.all_available)
+        self.all_button.pack(side='right')
 
     def create_statistic(self):
         window_statistic = tk.Toplevel()
@@ -407,7 +409,7 @@ class Window:
 
         top_frame = tk.Frame(window_statistic, highlightbackground='white')
         top_frame.pack(side='top')
-        top_label = ttk.Label(top_frame, text='歷史統計資料查詢')
+        top_label = tk.Label(top_frame, text='歷史統計資料查詢')
         top_label.pack(side='top')
 
 
@@ -424,7 +426,7 @@ class Window:
         button_frame.pack(side='top')
         result_frame = tk.Frame(window_prediction, highlightbackground='white')
         result_frame.pack(side='top')
-        top_label = ttk.Label(top_frame, text='未來有無場地預測')
+        top_label = tk.Label(top_frame, text='未來有無場地預測')
         top_label.pack(side='top')
 
         result_num = [ttk.Label(result_frame, text='x') for i in range(3)]
@@ -432,17 +434,17 @@ class Window:
         finish_button = ttk.Button(button_frame, text='Submit!',
                                    command=functools.partial(self.get_result, result_num, input_entry, lr_model))
         finish_button.pack()
-        result = [ttk.Label(result_frame, text='無場機率: '), ttk.Label(result_frame, text='有場機率: '),
-                  ttk.Label(result_frame, text='最終判定: ')]
+        result = [tk.Label(result_frame, text='無場機率: '), tk.Label(result_frame, text='有場機率: '),
+                  tk.Label(result_frame, text='最終判定: ')]
         for i in range(3):
             result[i].grid(row=i, column=0)
             result_num[i].grid(row=i, column=1)
 
         text_label = []
-        text_label.append(ttk.Label(text_frame, text='樓層(1 or 3): '))
-        text_label.append(ttk.Label(text_frame, text='月份(1 ~ 12): '))
-        text_label.append(ttk.Label(text_frame, text='星期(1 ~ 7): '))
-        text_label.append(ttk.Label(text_frame, text='時間(8 ~ 21): '))
+        text_label.append(tk.Label(text_frame, text='樓層(1 or 3): '))
+        text_label.append(tk.Label(text_frame, text='月份(1 ~ 12): '))
+        text_label.append(tk.Label(text_frame, text='星期(1 ~ 7): '))
+        text_label.append(tk.Label(text_frame, text='時間(8 ~ 21): '))
 
         for i in range(4):
             input_entry.append(ttk.Entry(text_frame, width=10))
@@ -500,6 +502,19 @@ class Window:
         else:
             self.hit[i][j] = False
             self.time_button[i][j].configure(highlightbackground='coral', text='X')
+
+    def all_available(self):
+        a = 0
+        if a%2 == 0:
+            for i in range(5):
+                for j in range(14):
+                    self.hit[i][j] = True
+                    self.time_button[i][j].config(highlightbackground='light sea green', text='O')
+        else:
+            for i in range(5):
+                for j in range(14):
+                    self.hit[i][j] = False
+                    self.time_button[i][j].config(highlightbackground='coral', text='X')
 
     def open_web(self):
         driver.get(url)
