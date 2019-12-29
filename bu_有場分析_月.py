@@ -1,11 +1,9 @@
-'''2017'''
-
 import csv
 import datetime
 import matplotlib.pyplot as py
 
 
-def Available_Count(row):
+def Available_Month_Count(row):
     '''將篩選完的row值按照月份及時段分類後記錄至各自的dict中
        parameter為檔案內的一個row(list)，無return值'''
     # 一樓
@@ -52,6 +50,8 @@ def Available_Count(row):
                         totalPeriod[i]['無場'] = 1
     return None
 
+
+'''main function'''
 # 輸入篩選區間
 print('如不需篩選則輸入-1')
 searchYear = int(input('請輸入欲查詢年份(2010~2019): '))
@@ -63,11 +63,11 @@ csvfile = open(fileName, 'r', encoding='ANSI')
 rows = csv.reader(csvfile)
 
 # Period[i][j]-->星期i的第j時段
-firstPeriod, thirdPeriod, totalPeriod, firstData, thirdData, totalData = [] ,[] ,[] ,[] ,[] ,[]
+firstPeriod, thirdPeriod, totalPeriod, firstData, thirdData, totalData = [], [], [], [], [], []
 for i in range(12):
-    firstPeriod.append({'有場':0, '無場':0})
-    thirdPeriod.append({'有場':0, '無場':0})
-    totalPeriod.append({'有場':0, '無場':0})
+    firstPeriod.append({'有場': 0, '無場': 0})
+    thirdPeriod.append({'有場': 0, '無場': 0})
+    totalPeriod.append({'有場': 0, '無場': 0})
     firstData.append([])
     thirdData.append([])
     totalData.append([])
@@ -82,10 +82,10 @@ for row in rows:
         # 將每row內容記入dict內
         if searchYear != -1:
             if row[0].year == searchYear:
-                Available_Count(row)  # 計算有場機率並記錄於Period(list)中
+                Available_Month_Count(row)  # 計算有場機率並記錄於Period(list)中
 
         if searchYear == -1:
-            Available_Count(row)  # 計算有場機率並記錄於Period(list)中
+            Available_Month_Count(row)  # 計算有場機率並記錄於Period(list)中
 
     count += 1
 
@@ -121,12 +121,12 @@ print(totalData)
 
 month = range(1, 13)
 
-py.plot(month, firstData, label = '一樓', marker = 'o')
-py.plot(month, thirdData, label = '三樓', marker = 'o')
-py.plot(month, totalData, label = 'union', marker = 'o')
+py.plot(month, firstData, label='一樓', marker='o')
+py.plot(month, thirdData, label='三樓', marker='o')
+py.plot(month, totalData, label='union', marker='o')
 
 py.ylim(0, 1)
-py.legend(loc = 'best')
+py.legend(loc='best')
 py.xlabel('Month')
 py.ylabel('Court Available Percentage')
 if searchYear != -1:

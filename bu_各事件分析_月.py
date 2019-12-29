@@ -48,7 +48,7 @@ def Sort_Simplify_Data(Type):
 def Plot_Graph(Key, Value, location):
     '''將結果繪製成圓餅圖
        parameter為Key, Value兩項(list)以及樓層位置(str)，無return值'''
-    py.pie(Value, labels = Key, autopct = '%1.1f%%')
+    py.pie(Value, labels=Key, autopct='%1.1f%%')
 
     if searchYear == -1 and searchMonth == -1:
         py.title('近十年'+location+'各事件機率表')
@@ -58,12 +58,14 @@ def Plot_Graph(Key, Value, location):
         py.title('近十年'+str(searchMonth)+'月'+location+'各事件機率表')
     if searchYear != -1 and searchMonth != -1:
         py.title(str(searchYear)+'年'+str(searchMonth)+'月'+location+'各事件機率表')
-    py.legend(loc = 'best')
+    py.legend(loc='best')
     py.show()
     return None
 
+
+'''main function'''
 # 輸入篩選區間
-searchFloor = int(input('請輸入欲查詢樓層(1,3): ')) 
+searchFloor = int(input('請輸入欲查詢樓層(1,3): '))
 print('\n', '如不需篩選則輸入-1')
 searchYear = int(input('請輸入欲查詢年份(2010~2019): '))
 searchMonth = int(input('請輸入欲查詢月份(1~12): '))
@@ -109,12 +111,12 @@ print('\n', '============================================', '\n')
 firstTotal = sum(firstType.values())  # 一樓
 for key, value in firstType.items():
     firstType[key] = value / firstTotal
-firstKey , firstValue = Sort_Simplify_Data(firstType)
+firstKey, firstValue = Sort_Simplify_Data(firstType)
 
 thirdTotal = sum(thirdType.values())  # 三樓
 for key, value in thirdType.items():
     thirdType[key] = value / thirdTotal
-thirdKey , thirdValue = Sort_Simplify_Data(thirdType)
+thirdKey, thirdValue = Sort_Simplify_Data(thirdType)
 
 # 製圖
 if searchFloor == 1:

@@ -9,7 +9,6 @@ def Event_Count(row):
     for i in range(14):  # 每一row(天)的各時段
         if searchHour != -1:
             i = searchHour - 8
-            print(i)
         # 一樓
         if row[i+1] in firstType:
             firstType[row[i+1]] += 1
@@ -52,7 +51,7 @@ def Sort_Simplify_Data(Type):
 def Plot_Graph(Key, Value, location):
     '''將結果繪製成圓餅圖
        parameter為Key, Value兩項(list)以及樓層位置(str)，無return值'''
-    py.pie(Value, labels = Key, autopct = '%1.1f%%')
+    py.pie(Value, labels=Key, autopct='%1.1f%%')
 
     weekday = ['星期一', '星期二', '星期三', '星期四', '星期五', '星期六', '星期日']
 
@@ -64,12 +63,14 @@ def Plot_Graph(Key, Value, location):
         py.title(str(searchHour)+':00~'+str(searchHour+1)+':00'+location+'各事件機率表')
     if searchWeek != -1 and searchHour != -1:
         py.title(weekday[searchWeek-1]+str(searchHour)+':00~'+str(searchHour+1)+':00'+location+'各事件機率表')
-    py.legend(loc = 'best')
+    py.legend(loc='best')
     py.show()
     return None
 
+
+'''main function'''
 # 輸入篩選區間
-searchFloor = int(input('請輸入欲查詢樓層(1,3): ')) 
+searchFloor = int(input('請輸入欲查詢樓層(1,3): '))
 print('\n', '如不需篩選則輸入-1')
 
 searchWeek = int(input('請輸入欲查詢星期(1~7): '))
@@ -115,12 +116,12 @@ print('\n', '============================================', '\n')
 firstTotal = sum(firstType.values())  # 一樓
 for key, value in firstType.items():
     firstType[key] = value / firstTotal
-firstKey , firstValue = Sort_Simplify_Data(firstType)
+firstKey, firstValue = Sort_Simplify_Data(firstType)
 
 thirdTotal = sum(thirdType.values())  # 三樓
 for key, value in thirdType.items():
     thirdType[key] = value / thirdTotal
-thirdKey , thirdValue = Sort_Simplify_Data(thirdType)
+thirdKey, thirdValue = Sort_Simplify_Data(thirdType)
 
 # 製圖
 if searchFloor == 1:

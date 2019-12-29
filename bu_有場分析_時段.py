@@ -2,7 +2,8 @@ import csv
 import datetime
 import matplotlib.pyplot as py
 
-def Available_Count(row):
+
+def Available_Time_Count(row):
     '''將篩選完的row值按照星期及時段分類後記錄至各自的dict中
        parameter為檔案內的一個row(list)，無return值'''
     for i in range(7):  # 星期
@@ -49,10 +50,10 @@ def Plot_Graph(data, location):
        parameter為資料檔(list)以及樓層位置(str)，無return值'''
     for i in range(7):
         percent = data[i]
-        py.plot(time, percent, label = weekList[i], marker = 'o')
+        py.plot(time, percent, label=weekList[i], marker='o')
 
     py.ylim(0, 1)
-    py.legend(loc = 'best')
+    py.legend(loc='best')
     py.xlabel('Time(hour)')
     py.ylabel('Court Available Percentage')
     if searchYear == -1 and searchMonth == -1:
@@ -66,11 +67,13 @@ def Plot_Graph(data, location):
     py.show()
     return None
 
+
+'''main function'''
 # 輸入篩選區間
-searchFloor = int(input('請輸入欲查詢樓層(0,1,3): ')) 
-print('\n','如不需篩選則輸入-1')
+searchFloor = int(input('請輸入欲查詢樓層(0,1,3): '))
+print('\n', '如不需篩選則輸入-1')
 searchYear = int(input('請輸入欲查詢年份(2010~2019): '))
-searchMonth  = int(input('請輸入欲查詢月份(1~12): '))
+searchMonth = int(input('請輸入欲查詢月份(1~12): '))
 
 # filename放csv網址，請自行修改
 fileName = 'C:\\Users\\Asus\\Desktop\\badminton_1n3F_10y_NEW.csv'
@@ -99,22 +102,22 @@ for row in rows:
         # 僅篩選年
         if searchYear != -1 and searchMonth == -1:
             if row[0].year == searchYear:
-                Available_Count(row)
+                Available_Time_Count(row)
 
         # 僅篩選月
         if searchYear == -1 and searchMonth != -1:
             if row[0].month == searchMonth:
-                Available_Count(row)
+                Available_Time_Count(row)
 
         # 年月皆篩選
         if searchYear != -1 and searchMonth != -1:
             if row[0].year == searchYear and row[0].month == searchMonth:
-                Available_Count(row)
+                Available_Time_Count(row)
 
         # 年月皆不篩選
         if searchYear == -1 and searchMonth == -1:
             if True:
-                Available_Count(row)
+                Available_Time_Count(row)
     count += 1
 
 # 關檔

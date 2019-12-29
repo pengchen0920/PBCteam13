@@ -50,10 +50,10 @@ def Plot_Graph(data, location):
        parameter為資料檔(list)以及樓層位置(str)，無return值'''
     for i in range(7):
         percent = data[i]
-        py.plot(time, percent, label = weekList[i], marker = 'o')
+        py.plot(time, percent, label=weekList[i], marker='o')
 
     py.ylim(0)
-    py.legend(loc = 'best')
+    py.legend(loc='best')
     py.xlabel('Time(hour)')
     py.ylabel('Court Available Percentage')
     if searchYear == -1 and searchMonth == -1:
@@ -68,12 +68,13 @@ def Plot_Graph(data, location):
     return None
 
 
+'''main function'''
 # 輸入欲查詢事件及篩選區間
 searchEvent = input('請輸入欲查詢事件: ')
-searchFloor = int(input('請輸入欲查詢樓層(0,1,3): ')) 
-print('\n','如不需篩選則輸入-1')
+searchFloor = int(input('請輸入欲查詢樓層(0,1,3): '))
+print('\n', '如不需篩選則輸入-1')
 searchYear = int(input('請輸入欲查詢年份(2010~2019): '))
-searchMonth  = int(input('請輸入欲查詢月份(1~12): '))
+searchMonth = int(input('請輸入欲查詢月份(1~12): '))
 
 # filename放csv網址，請自行修改
 fileName = 'C:\\Users\\Asus\\Desktop\\badminton_1n3F_10y_NEW.csv'
@@ -122,8 +123,6 @@ for row in rows:
 
 # 關檔
 csvfile.close
-
-print(firstPeriod)
 
 print('\n', '============================================', '\n')
 
