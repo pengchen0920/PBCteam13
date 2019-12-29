@@ -28,10 +28,15 @@ def lr_training():
 
 
 def lr_predict(logistic_model):
-    input_floor = int(input("Enter floor:"))
-    input_month = int(input("Enter month:"))
-    input_weekday = int(input("Enter weekday:"))
-    input_time = int(input("Enter time:"))
+    # input_floor = int(input("Enter floor:"))
+    # input_month = int(input("Enter month:"))
+    # input_weekday = int(input("Enter weekday:"))
+    # input_time = int(input("Enter time:"))
+
+    input_floor = parameters[0]
+    input_month = parameters[1]
+    input_weekday = parameters[2]
+    input_time = parameters[3]
 
 
     input_all = [[]]
