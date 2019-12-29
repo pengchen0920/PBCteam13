@@ -3,6 +3,7 @@ import tkinter as tk
 from tkinter import ttk
 import functools
 import lr_connect
+from PIL import ImageTk, Image
 
 # NOTES:
 # 一週內會有這樣的資訊：(9) (6) --> (left) (already booked)
@@ -322,7 +323,7 @@ for day in range(15):
 # print(time_table_1f)
 
 # 這裡開始是視窗的部分
-
+lr_model = lr_connect.lr_training()
 
 class Window:
 
@@ -406,7 +407,7 @@ class Window:
 
         top_frame = tk.Frame(window_statistic, highlightbackground='white')
         top_frame.pack(side='top')
-        top_label = ttk.Label(top_frame, text='歷史統計資料查詢', highlightbackground='white')
+        top_label = ttk.Label(top_frame, text='歷史統計資料查詢')
         top_label.pack(side='top')
 
 
@@ -423,13 +424,13 @@ class Window:
         button_frame.pack(side='top')
         result_frame = tk.Frame(window_prediction, highlightbackground='white')
         result_frame.pack(side='top')
-        top_label = ttk.Label(top_frame, text='未來有無場地預測', highlightbackground='white')
+        top_label = ttk.Label(top_frame, text='未來有無場地預測')
         top_label.pack(side='top')
 
         result_num = [ttk.Label(result_frame, text='x') for i in range(3)]
         input_entry = []
         finish_button = ttk.Button(button_frame, text='Submit!',
-                                   command=functools.partial(self.get_result, result_num, input_entry))
+                                   command=functools.partial(self.get_result, result_num, input_entry, lr_model))
         finish_button.pack()
         result = [ttk.Label(result_frame, text='無場機率: '), ttk.Label(result_frame, text='有場機率: '),
                   ttk.Label(result_frame, text='最終判定: ')]
@@ -455,12 +456,12 @@ class Window:
         image.pack(side='bottom', fill = 'both', expand = 'yes')
 
 
-    def get_result(self, num, input_entry):
+    def get_result(self, num, input_entry, model):
         parameters = [None for i in range(4)]
         for i in range(4):
             parameters[i] = int(input_entry[i].get())
         text_predict = []
-        text_predict = lr_connect.lr_predict(lr_connect.lr_training(), parameters)
+        text_predict = lr_connect.lr_predict(model, parameters)
         for i in range(3):
             num[i].config(text=text_predict[i])
 
