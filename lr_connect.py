@@ -65,18 +65,19 @@ def lr_predict(logistic_model, parameters):
     final_result = logistic_model.predict(data_input)
     predict_result_per = np.round(logistic_model.predict_proba(data_input),3)
     
-    result_str = "最終判定"
-    if final_result[0] == 0:
-        result_str += "無場！"
-    else:
-        return_str += "有場！"
+    # result_str = ""
+    # if final_result[0] == 0:
+    #     result_str += "無場！"
+    # else:
+    #     return_str += "有場！"
 
     return_list = []
     # 無場機率
-    return_list.append(predict_result_per[0][0])
+    return_list.append(str(predict_result_per[0][0]))
     # 有場機率
-    return_list.append(predict_result_per[0][1])
-    return_list.append(return_str)
+    return_list.append(str(predict_result_per[0][1]))
+    return_list.append("無場" if final_result[0] == 0 else "有場")
 
-    # return_list[0] 是無場機率（小數） / return_list[1] 是有場機率（小數） / return_list[2] 是最終判斷（字串）
+    # return_list[0] 是無場機率（小數） / return_list[1] 是有場機率（小數） / return_list[2] 是最終判斷(0/1)
     return return_list
+

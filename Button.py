@@ -2,6 +2,7 @@
 import tkinter as tk
 from tkinter import ttk
 import functools
+import lr_connect
 
 # NOTES:
 # 一週內會有這樣的資訊：(9) (6) --> (left) (already booked)
@@ -171,8 +172,9 @@ from selenium.webdriver.common.keys import Keys
 
 
 columns_1f = []
-driver = webdriver.Chrome(r"C:\Users\User\Desktop\chromedriver")
+# driver = webdriver.Chrome(r"C:\Users\User\Desktop\chromedriver")
 # driver = webdriver.Chrome(r"/Users/zizhenli/Downloads/chromedriver")
+driver = webdriver.Chrome("/Users/pengchen/Desktop/大四上/商管程設/final_project/chromedriver")
 
 # In[59]:
 
@@ -452,8 +454,8 @@ class Window:
         parameters = [None for i in range(4)]
         for i in range(4):
             parameters[i] = int(input_entry[i].get())
-        print(parameters)
-        # text_predict = lr_connect.lr_predict(lr_connect.lr_training, parameters)
+        text_predict = []
+        text_predict = lr_connect.lr_predict(lr_connect.lr_training(), parameters)
         for i in range(3):
             num[i].config(text=text_predict[i])
 
@@ -563,4 +565,3 @@ window2.top_label.configure(text='圖表顯示在您的空閒時間中，接下�
 window2.create_fifteen_days(fifteen_days)
 window2.create_result(final_room)
 window2.window.mainloop()
-
