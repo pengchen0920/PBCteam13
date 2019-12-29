@@ -2,26 +2,6 @@ import tkinter as tk
 from tkinter import ttk
 import functools
 import PastAnalysis as PA
- 
-# app = tk.Tk() 
-# app.geometry('1200x1200')
-
-# labelTop = tk.Label(app, text = "Choose your favourite month")
-# labelTop.grid(column=0, row=0)
-
-# comboExample = ttk.Combobox(app, 
-#                             values=[
-#                                     "January", 
-#                                     "February",
-#                                     "March",
-#                                     "April"])
-# print(dict(comboExample)) 
-# comboExample.grid(column=0, row=1)
-# comboExample.current(1)
-
-# print(comboExample.current(), comboExample.get())
-
-# app.mainloop()
 
 OptionList = [
 "純文字分析",
@@ -81,22 +61,28 @@ def create_two():
     w.geometry('600x600')
     w.title('result')
 
-    dataList = []
+    dataList = [None for i in range(3)]
 
     t_a = tk.Label(w, text="請輸入欲查詢樓層(0,1,3) (如不需篩選則輸入-1):")
     t_a.grid(row=0, column=0)
-    a = tk.Entry(w,width=30,fg="black")
-    a.grid(row=0, column=1)
+    dataList[0] = tk.Entry(w,width=30,fg="black")
+    dataList[0].grid(row=0, column=1)
     t_b = tk.Label(w, text="請輸入欲查詢年份(2010~2019):")
     t_b.grid(row=1, column=0)
-    b = tk.Entry(w,width=30,fg="black")
-    b.grid(row=1, column=1)
+    dataList[1] = tk.Entry(w,width=30,fg="black")
+    dataList[1].grid(row=1, column=1)
     t_c = tk.Label(w, text="請輸入欲查詢月份(1~12):")
     t_c.grid(row=2, column=0)
-    c = tk.Entry(w,width=30,fg="black")
-    c.grid(row=2, column=1)
+    dataList[2] = tk.Entry(w,width=30,fg="black")
+    dataList[2].grid(row=2, column=1)
+
+    def get_result(dataList):
+        new_dataList = [None for i in range(3)]
+        for i in range(3):
+            new_dataList[i] = int(dataList[i].get())
+        PA.Avail_Analysis_Period(new_dataList)
     
-    done = tk.Button(w, text='完成', width=10, height=1, font=('Helvetica', 18), command=functools.partial(PA.Text_Analysis, dataList))
+    done = tk.Button(w, text='完成', width=10, height=1, font=('Helvetica', 18), command=functools.partial(get_result, dataList))
     done.grid(row=3, column=1)
 
     

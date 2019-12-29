@@ -65,8 +65,6 @@ def Text_Analysis(dataList):
         searchWeek = int(input('請輸入欲查詢星期(1~7): '))
         searchHour = int(input('請輸入欲查詢時段(8~21): '))
     '''
-    print("1",dataList)
-    print(dataList[0])
 
     searchWeek = dataList[0]
     searchHour = dataList[1]
@@ -74,6 +72,7 @@ def Text_Analysis(dataList):
     timeList = ['8:00~9:00', '9:00~10:00', '10:00~11:00', '11:00~12:00', '12:00~13:00', '13:00~14:00', '14:00~15:00', '15:00~16:00', '16:00~17:00', '17:00~18:00', '18:00~19:00', '19:00~20:00', '20:00~21:00', '21:00~22:00']
     weekList = ['星期一', '星期二', '星期三', '星期四', '星期五', '星期六', '星期日']
 
+    
     # 計算事件發生總次數，並以總次數計算各事件發生機率
     # 星期i 時段j
     for i in range(7):
@@ -201,8 +200,8 @@ def Avail_Analysis_Period(dataList):
     searchMonth = dataList[2]
 
     # filename放csv網址，請自行修改
-    fileName = 'C:\\Users\\Asus\\Desktop\\badminton_1n3F_10y_NEW.csv'
-    csvfile = open(fileName, 'r', encoding='ANSI')
+    fileName = '/Users/zizhenli/Documents/GitHub/PBCteam13/badminton_1n3F_10y.csv'
+    csvfile = open(fileName, 'r', encoding='utf-8')
 
     rows = csv.reader(csvfile)
 
@@ -518,8 +517,8 @@ def Single_Event_Analysis_Period(dataList):
     searchMonth = dataList[3]
 
     # filename放csv網址，請自行修改
-    fileName = 'C:\\Users\\Asus\\Desktop\\badminton_1n3F_10y_NEW.csv'
-    csvfile = open(fileName, 'r', encoding='ANSI')
+    fileName = '/Users/zizhenli/Documents/GitHub/PBCteam13/badminton_1n3F_10y.csv'
+    csvfile = open(fileName, 'r', encoding='utf-8')
 
     rows = csv.reader(csvfile)
 
@@ -841,8 +840,8 @@ def Multi_Event_Analysis_Period(dataList):
     searchHour = dataList[2]
     
     # filename放csv網址，請自行修改
-    fileName = 'C:\\Users\\Asus\\Desktop\\badminton_1n3F_10y_NEW.csv'
-    csvfile = open(fileName, 'r', encoding='ANSI')
+    fileName = '/Users/zizhenli/Documents/GitHub/PBCteam13/badminton_1n3F_10y.csv'
+    csvfile = open(fileName, 'r', encoding='utf-8')
 
     rows = csv.reader(csvfile)
 
