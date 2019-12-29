@@ -425,7 +425,9 @@ class Window:
         top_label.pack(side='top')
 
         result_num = [ttk.Label(result_frame, text='x') for i in range(3)]
-        finish_button = ttk.Button(button_frame, text='Submit!', command=functools.partial(self.get_result, result_num))
+        input_entry = []
+        finish_button = ttk.Button(button_frame, text='Submit!',
+                                   command=functools.partial(self.get_result, result_num, input_entry))
         finish_button.pack()
         result = [ttk.Label(result_frame, text='無場機率: '), ttk.Label(result_frame, text='有場機率: '),
                   ttk.Label(result_frame, text='最終判定: ')]
@@ -434,7 +436,6 @@ class Window:
             result_num[i].grid(row=i, column=1)
 
         text_label = []
-        input_entry = []
         text_label.append(ttk.Label(text_frame, text='樓層(1 or 3): '))
         text_label.append(ttk.Label(text_frame, text='月份(1 ~ 12): '))
         text_label.append(ttk.Label(text_frame, text='星期(1 ~ 7): '))
@@ -447,9 +448,14 @@ class Window:
             text_label[i].grid(row=i, column=0)
             input_entry[i].grid(row=i, column=1)
 
-    def get_result(self, num):
+    def get_result(self, num, input_entry):
+        parameters = [None for i in range(4)]
+        for i in range(4):
+            parameters[i] = int(input_entry[i].get())
+        print(parameters)
+        # text_predict = lr_connect.lr_predict(lr_connect.lr_training, parameters)
         for i in range(3):
-            num[i].config(text='000')
+            num[i].config(text=text_predict[i])
 
     def create_fifteen_days(self, content):
         for i in range(15):
