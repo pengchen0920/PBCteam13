@@ -171,8 +171,8 @@ from selenium.webdriver.common.keys import Keys
 
 
 columns_1f = []
-driver = webdriver.Chrome(r"C:\Users\User\Desktop\chromedriver")
-# driver = webdriver.Chrome(r"/Users/zizhenli/Downloads/chromedriver")
+# driver = webdriver.Chrome(r"C:\Users\User\Desktop\chromedriver")
+driver = webdriver.Chrome(r"/Users/zizhenli/Downloads/chromedriver")
 
 # In[59]:
 
