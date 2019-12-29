@@ -27,11 +27,16 @@ def lr_training():
     return lr
 
 
-def lr_predict(logistic_model):
-    input_floor = int(input("Enter floor:"))
-    input_month = int(input("Enter month:"))
-    input_weekday = int(input("Enter weekday:"))
-    input_time = int(input("Enter time:"))
+def lr_predict(logistic_model, parameters):
+    # input_floor = int(input("Enter floor:"))
+    # input_month = int(input("Enter month:"))
+    # input_weekday = int(input("Enter weekday:"))
+    # input_time = int(input("Enter time:"))
+
+    input_floor = parameters[0]
+    input_month = parameters[1]
+    input_weekday = parameters[2]
+    input_time = parameters[3]
 
 
     input_all = [[]]
@@ -56,20 +61,22 @@ def lr_predict(logistic_model):
     data_input.iloc[0][input_weekday + 13] = 1
     data_input.iloc[0][input_time + 13] = 1
 
-
-    final_result = lr.predict(data_input)
-    predict_result_per = np.round(lr.predict_proba(data_input),3)
-    print("無場機率：" , predict_result_per[0][0], "/ 有場機率：", predict_result_per[0][1])
-
-    print("最終判定", end = "")
+    
+    final_result = logistic_model.predict(data_input)
+    predict_result_per = np.round(logistic_model.predict_proba(data_input),3)
+    
+    result_str = "最終判定"
     if final_result[0] == 0:
-        print("無場！")
+        result_str += "無場！"
     else:
-        print("有場！")
+        return_str += "有場！"
 
-while True:
-  try:
-    lr_predict(lr)
-  except:
-    lr = lr_training()
+    return_list = []
+    # 無場機率
+    return_list.append(predict_result_per[0][0])
+    # 有場機率
+    return_list.append(predict_result_per[0][1])
+    return_list.append(return_str)
 
+    # return_list[0] 是無場機率（小數） / return_list[1] 是有場機率（小數） / return_list[2] 是最終判斷（字串）
+    return return_list
