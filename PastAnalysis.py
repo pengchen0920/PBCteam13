@@ -2,7 +2,8 @@ import csv
 import datetime
 import matplotlib.pyplot as py
 
-def Text_Analysis():
+# 2
+def Text_Analysis(dataList):
 
     # filename放csv網址，請自行修改
     fileName = 'C:\\Users\\Asus\\Desktop\\badminton_1n3F_10y_NEW.csv'
@@ -58,12 +59,15 @@ def Text_Analysis():
     # 關檔
     csvfile.close
 
+    '''
     # 輸入欲查詢範圍
     preciseSearch = input('請輸入是否要篩選(Y/N): ')
     if preciseSearch in('y', 'Y'):
         searchWeek = int(input('請輸入欲查詢星期(1~7): '))
         searchHour = int(input('請輸入欲查詢時段(8~21): '))
-    print('\n', '============================================', '\n')
+    '''
+    searchWeek = dataList[0]
+    searchHour = dataList[1]
 
     timeList = ['8:00~9:00', '9:00~10:00', '10:00~11:00', '11:00~12:00', '12:00~13:00', '13:00~14:00', '14:00~15:00', '15:00~16:00', '16:00~17:00', '17:00~18:00', '18:00~19:00', '19:00~20:00', '20:00~21:00', '21:00~22:00']
     weekList = ['星期一', '星期二', '星期三', '星期四', '星期五', '星期六', '星期日']
@@ -156,8 +160,8 @@ def Text_Analysis():
                     print('　　union後有場機率: 0.00%')
                 print()
 
-
-def Avail_Analysis_Period():
+# 3
+def Avail_Analysis_Period(dataList):
 
 
     def Available_Time_Count(row):
@@ -226,11 +230,16 @@ def Avail_Analysis_Period():
 
 
     '''main function'''
+    '''
     # 輸入篩選區間
     searchFloor = int(input('請輸入欲查詢樓層(0,1,3): '))
     print('\n', '如不需篩選則輸入-1')
     searchYear = int(input('請輸入欲查詢年份(2010~2019): '))
     searchMonth = int(input('請輸入欲查詢月份(1~12): '))
+    '''
+    searchFloor = dataList[0]
+    searchYear = dataList[1]
+    searchMonth = dataList[2]
 
     # filename放csv網址，請自行修改
     fileName = 'C:\\Users\\Asus\\Desktop\\badminton_1n3F_10y_NEW.csv'
@@ -280,8 +289,6 @@ def Avail_Analysis_Period():
     # 關檔
     csvfile.close
 
-    print('\n', '============================================', '\n')
-
     weekList = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
     timeList = ['8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21']
 
@@ -325,21 +332,18 @@ def Avail_Analysis_Period():
 
     # 一樓有場機率分配圖
     if searchFloor == 1:
-        print(firstData)
         Plot_Graph(firstData, '一樓')
 
     # 三樓有場機率分配圖
     elif searchFloor == 3:
-        print(thirdData)
         Plot_Graph(thirdData, '三樓')
 
     # union有場機率分配圖
     elif searchFloor == 0:
-        print(totalData)
         Plot_Graph(totalData, 'union後')
 
-
-def Avail_Analysis_Month():
+# 1
+def Avail_Analysis_Month(dataList):
 
 
     def Available_Month_Count(row):
@@ -391,9 +395,12 @@ def Avail_Analysis_Month():
 
 
     '''main function'''
+    '''
     # 輸入篩選區間
     print('如不需篩選則輸入-1')
     searchYear = int(input('請輸入欲查詢年份(2010~2019): '))
+    '''
+    searchYear = dataList[0]
 
     # filename放csv網址，請自行修改
     fileName = 'C:\\Users\\Asus\\Desktop\\badminton_1n3F_10y_NEW.csv'
@@ -431,8 +438,6 @@ def Avail_Analysis_Month():
     # 關檔
     csvfile.close
 
-    print('\n', '============================================', '\n')
-
     # 計算事件發生總次數，並以總次數計算各事件發生機率
     # 星期i 時段j
     for i in range(12):
@@ -454,10 +459,6 @@ def Avail_Analysis_Month():
             totalPeriod[i][key] = value / totalNum  # 各事件發生機率
         totalData[i].append(totalPeriod[i]['有場'])
 
-    print(firstData)
-    print(thirdData)
-    print(totalData)
-
     month = range(1, 13)
 
     py.plot(month, firstData, label='一樓', marker='o')
@@ -474,8 +475,8 @@ def Avail_Analysis_Month():
         py.title('近十各月份有場機率')
     py.show()
 
-
-def Single_Event_Analysis_Period():
+# 4
+def Single_Event_Analysis_Period(dataList):
 
 
     def Available_Count(row):
@@ -544,12 +545,18 @@ def Single_Event_Analysis_Period():
 
 
     '''main function'''
+    '''
     # 輸入欲查詢事件及篩選區間
     searchEvent = input('請輸入欲查詢事件: ')
     searchFloor = int(input('請輸入欲查詢樓層(0,1,3): '))
     print('\n', '如不需篩選則輸入-1')
     searchYear = int(input('請輸入欲查詢年份(2010~2019): '))
     searchMonth = int(input('請輸入欲查詢月份(1~12): '))
+    '''
+    searchEvent = dataList[0]
+    searchFloor = dataList[1]
+    searchYear = dataList[2]
+    searchMonth = dataList[3]
 
     # filename放csv網址，請自行修改
     fileName = 'C:\\Users\\Asus\\Desktop\\badminton_1n3F_10y_NEW.csv'
@@ -599,8 +606,6 @@ def Single_Event_Analysis_Period():
     # 關檔
     csvfile.close
 
-    print('\n', '============================================', '\n')
-
     weekList = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
     timeList = ['8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21']
 
@@ -640,10 +645,6 @@ def Single_Event_Analysis_Period():
             else:
                 totalData[i].append(0)
 
-    print(firstData)
-    print(thirdData)
-    print(totalData)
-
     time = timeList
 
     # 一樓event機率分配圖
@@ -658,8 +659,8 @@ def Single_Event_Analysis_Period():
     elif searchFloor == 0:
         Plot_Graph(totalData, 'union後')
 
-
-def Single_Event_Analysis_Month():
+# 2
+def Single_Event_Analysis_Month(dataList):
 
 
     def Available_Count(row):
@@ -711,10 +712,14 @@ def Single_Event_Analysis_Month():
 
 
     '''main function'''
+    '''
     # 輸入欲查詢事件及篩選區間
     searchEvent = input('請輸入欲查詢事件: ')
     print('\n'+'如不需篩選則輸入-1')
     searchYear = int(input('請輸入欲查詢年份(2010~2019): '))
+    '''
+    searchEvent = dataList[0]
+    searchYear = dataList[1]
 
     # filename放csv網址，請自行修改
     fileName = 'C:\\Users\\Asus\\Desktop\\badminton_1n3F_10y_NEW.csv'
@@ -752,8 +757,6 @@ def Single_Event_Analysis_Month():
     # 關檔
     csvfile.close
 
-    print('\n', '============================================', '\n')
-
     # 計算事件發生總次數，並以總次數計算各事件發生機率
     # 星期i 時段j
     for i in range(12):
@@ -782,10 +785,6 @@ def Single_Event_Analysis_Month():
         else:
             totalData[i].append(0)
 
-    print(firstData)
-    print(thirdData)
-    print(totalData)
-
     month = range(1, 13)
 
     py.plot(month, firstData, label='一樓', marker='o')
@@ -802,8 +801,8 @@ def Single_Event_Analysis_Month():
         py.title('近十年各月份'+searchEvent+'發生機率表')
     py.show()
 
-
-def Multi_Event_Analysis_Period():
+# 3
+def Multi_Event_Analysis_Period(dataList):
 
     def Event_Count(row):
         '''將篩選完的row值記錄至各自的dict中
@@ -871,13 +870,17 @@ def Multi_Event_Analysis_Period():
 
 
     '''main function'''
+    '''
     # 輸入篩選區間
     searchFloor = int(input('請輸入欲查詢樓層(1,3): '))
     print('\n', '如不需篩選則輸入-1')
-
     searchWeek = int(input('請輸入欲查詢星期(1~7): '))
     searchHour = int(input('請輸入欲查詢時段(8~21): '))
-
+    '''
+    searchFloor = dataList[0]
+    searchWeek = dataList[1]
+    searchHour = dataList[2]
+    
     # filename放csv網址，請自行修改
     fileName = 'C:\\Users\\Asus\\Desktop\\badminton_1n3F_10y_NEW.csv'
     csvfile = open(fileName, 'r', encoding='ANSI')
@@ -912,8 +915,6 @@ def Multi_Event_Analysis_Period():
     # 關檔
     csvfile.close
 
-    print('\n', '============================================', '\n')
-
     # 將資料排序並簡化
     firstTotal = sum(firstType.values())  # 一樓
     for key, value in firstType.items():
@@ -931,8 +932,8 @@ def Multi_Event_Analysis_Period():
     elif searchFloor == 3:
         Plot_Graph(thirdKey, thirdValue, '三樓')
 
-
-def Multi_Event_Analysis_Month():
+# 3
+def Multi_Event_Analysis_Month(dataList):
     def Event_Count(row):
         '''將篩選完的row值記錄至各自的dict中
            parameter為檔案內的一個row(list)，無return值'''
@@ -994,11 +995,16 @@ def Multi_Event_Analysis_Month():
 
 
     '''main function'''
+    '''
     # 輸入篩選區間
     searchFloor = int(input('請輸入欲查詢樓層(1,3): '))
     print('\n', '如不需篩選則輸入-1')
     searchYear = int(input('請輸入欲查詢年份(2010~2019): '))
     searchMonth = int(input('請輸入欲查詢月份(1~12): '))
+    '''
+    searchFloor = dataList[0]
+    searchYear = dataList[1]
+    searchMonth = dataList[2]
 
     # filename放csv網址，請自行修改
     fileName = 'C:\\Users\\Asus\\Desktop\\badminton_1n3F_10y_NEW.csv'
