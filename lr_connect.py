@@ -27,7 +27,7 @@ def lr_training():
     return lr
 
 
-def lr_predict(logistic_model):
+def lr_predict(logistic_model, parameters):
     # input_floor = int(input("Enter floor:"))
     # input_month = int(input("Enter month:"))
     # input_weekday = int(input("Enter weekday:"))
