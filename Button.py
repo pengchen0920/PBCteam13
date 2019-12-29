@@ -334,10 +334,11 @@ class Window:
         self.window.title('Time Selection')
         self.window.geometry('1200x1200')
 
-        self.top_label = tk.Label(self.window, text='請將您空閒的時間設為綠色!')
+        self.top_label = tk.Label(self.window, text='請將您空閒的時間設為綠色!', font='System, 20')
         self.top_label.pack()
 
         self.hit = [[False for i in range(14)] for j in range(7)]
+        self.a = 0
 
         # 建立frame
         self.frame = tk.Frame(self.window, highlightbackground='white')
@@ -504,17 +505,17 @@ class Window:
             self.time_button[i][j].configure(highlightbackground='coral', text='X')
 
     def all_available(self):
-        a = 0
-        if a%2 == 0:
-            for i in range(5):
+        if self.a%2 == 0:
+            for i in range(7):
                 for j in range(14):
                     self.hit[i][j] = True
                     self.time_button[i][j].config(highlightbackground='light sea green', text='O')
         else:
-            for i in range(5):
+            for i in range(7):
                 for j in range(14):
                     self.hit[i][j] = False
                     self.time_button[i][j].config(highlightbackground='coral', text='X')
+        self.a += 1
 
     def open_web(self):
         driver.get(url)
