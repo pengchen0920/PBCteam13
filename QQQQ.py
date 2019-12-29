@@ -4,6 +4,7 @@ from tkinter import ttk
 import functools
 import lr_connect
 from PIL import ImageTk, Image
+import PastAnalysis as PA
 
 # NOTES:
 # 一週內會有這樣的資訊：(9) (6) --> (left) (already booked)
@@ -174,8 +175,8 @@ from selenium.webdriver.common.keys import Keys
 
 columns_1f = []
 # driver = webdriver.Chrome(r"C:\Users\User\Desktop\chromedriver")
-# driver = webdriver.Chrome(r"/Users/zizhenli/Downloads/chromedriver")
-driver = webdriver.Chrome("/Users/pengchen/Desktop/大四上/商管程設/final_project/chromedriver")
+driver = webdriver.Chrome(r"/Users/zizhenli/Downloads/chromedriver")
+# driver = webdriver.Chrome("/Users/pengchen/Desktop/大四上/商管程設/final_project/chromedriver")
 
 # In[59]:
 
@@ -412,6 +413,140 @@ class Window:
         top_frame.pack(side='top')
         top_label = tk.Label(top_frame, text='歷史統計資料查詢')
         top_label.pack(side='top')
+
+        OptionList = [
+            "純文字分析",
+            "有場分析_時段",
+            "有場分析_月",
+            "活動分析_時段",
+            "活動分析_月",
+            "各事件分析_時段",
+            "各事件分析_月"
+        ] 
+
+        variable = tk.StringVar(window_statistic)
+        variable.set(OptionList[0])
+
+        tk.Label(font=('Helvetica', 18), text="歷史查詢事件").pack(side="top")
+        opt = tk.OptionMenu(window_statistic, variable, *OptionList)
+        opt.config(width=40, font=('Helvetica', 18))
+        opt.pack(side="top")
+
+        labelTest = tk.Label(text="", font=('Helvetica', 18), fg='red')
+        labelTest.pack(side="top")
+
+        def callback(*args):
+                labelTest.configure(text=variable.get())
+                if(variable.get()==OptionList[0]):
+                    finish.configure(command=create_one)
+                elif(variable.get()==OptionList[1]):
+                    finish.configure(command=create_two)
+                elif(variable.get()==OptionList[2]):
+                    finish.configure(command=create_three)
+                elif(variable.get()==OptionList[3]):
+                    finish.configure(command=create_four)
+                elif(variable.get()==OptionList[4]):
+                    finish.configure(command=create_five)
+                elif(variable.get()==OptionList[5]):
+                    finish.configure(command=create_six)
+                elif(variable.get()==OptionList[6]):
+                    finish.configure(command=create_seven)
+
+        finish = tk.Button(window_statistic, text='完成', width=10, height=1, command=callback, font=('Helvetica', 18))
+        finish.pack()
+
+        variable.trace("w", callback)
+
+        def create_two():
+            w = tk.Toplevel()
+            w.geometry('600x600')
+            w.title('result')
+
+            dataList = [None for i in range(3)]
+
+            t_a = tk.Label(w, text="請輸入欲查詢樓層(0,1,3) (如不需篩選則輸入-1):")
+            t_a.grid(row=0, column=0)
+            dataList[0] = tk.Entry(w,width=30,fg="black")
+            dataList[0].grid(row=0, column=1)
+            t_b = tk.Label(w, text="請輸入欲查詢年份(2010~2019):")
+            t_b.grid(row=1, column=0)
+            dataList[1] = tk.Entry(w,width=30,fg="black")
+            dataList[1].grid(row=1, column=1)
+            t_c = tk.Label(w, text="請輸入欲查詢月份(1~12):")
+            t_c.grid(row=2, column=0)
+            dataList[2] = tk.Entry(w,width=30,fg="black")
+            dataList[2].grid(row=2, column=1)
+
+            def get_result(dataList):
+                new_dataList = [None for i in range(3)]
+                for i in range(3):
+                    new_dataList[i] = int(dataList[i].get())
+                PA.Avail_Analysis_Period(new_dataList)
+            
+            done = tk.Button(w, text='完成', width=10, height=1, font=('Helvetica', 18), command=functools.partial(get_result, dataList))
+            done.grid(row=3, column=1)
+    
+        def create_four():
+            w = tk.Toplevel()
+            w.geometry('600x600')
+            w.title('result')
+
+            dataList = [None for i in range(4)]
+
+            t_a = tk.Label(w, text="請輸入欲查詢事件:")
+            t_a.grid(row=0, column=0)
+            dataList[0] = tk.Entry(w,width=30,fg="black")
+            dataList[0].grid(row=0, column=1)
+            t_b = tk.Label(w, text="請輸入欲查詢樓層(0,1,3) (如不需篩選則輸入-1):")
+            t_b.grid(row=1, column=0)
+            dataList[1] = tk.Entry(w,width=30,fg="black")
+            dataList[1].grid(row=1, column=1)
+            t_c = tk.Label(w, text="請輸入欲查詢年份(2010~2019):")
+            t_c.grid(row=2, column=0)
+            dataList[2] = tk.Entry(w,width=30,fg="black")
+            dataList[2].grid(row=2, column=1)
+            t_d = tk.Label(w, text="請輸入欲查詢月份(1~12):")
+            t_d.grid(row=3, column=0)
+            dataList[3] = tk.Entry(w,width=30,fg="black")
+            dataList[3].grid(row=3, column=1)
+
+            def get_result(dataList):
+                new_dataList = [None for i in range(4)]
+                for i in range(1, 4):
+                    new_dataList[i] = int(dataList[i].get())
+                PA.Single_Event_Analysis_Period(new_dataList)
+            
+            done = tk.Button(w, text='完成', width=10, height=1, font=('Helvetica', 18), command=functools.partial(get_result, dataList))
+            done.grid(row=4, column=1)
+
+        def create_six():
+            w = tk.Toplevel()
+            w.geometry('600x600')
+            w.title('result')
+
+            dataList = [None for i in range(3)]
+
+            t_a = tk.Label(w, text="請輸入欲查詢樓層(0,1,3) (如不需篩選則輸入-1):")
+            t_a.grid(row=0, column=0)
+            dataList[0] = tk.Entry(w,width=30,fg="black")
+            dataList[0].grid(row=0, column=1)
+            t_b = tk.Label(w, text="請輸入欲查詢星期(1~7):")
+            t_b.grid(row=1, column=0)
+            dataList[1] = tk.Entry(w,width=30,fg="black")
+            dataList[1].grid(row=1, column=1)
+            t_c = tk.Label(w, text="請輸入欲查詢時段(8~21):")
+            t_c.grid(row=2, column=0)
+            dataList[2] = tk.Entry(w,width=30,fg="black")
+            dataList[2].grid(row=2, column=1)
+
+            def get_result(dataList):
+                new_dataList = [None for i in range(3)]
+                for i in range(3):
+                    new_dataList[i] = int(dataList[i].get())
+                PA.Multi_Event_Analysis_Period(new_dataList)
+            
+            done = tk.Button(w, text='完成', width=10, height=1, font=('Helvetica', 18), command=functools.partial(get_result, dataList))
+            done.grid(row=3, column=1)
 
 
     def create_prediction(self):
