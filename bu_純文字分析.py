@@ -2,7 +2,7 @@ import csv
 import datetime
 
 # filename放csv網址，請自行修改
-fileName = 'C:\\Users\\Asus\\Desktop\\badminton_1n3F_10y_NEW.csv'
+fileName = '\\Users\\zizhenli\\Documents\\GitHub\\PBCteam13\\badminton_1n3F_10y_NEW.csv'
 csvfile = open(fileName, 'r', encoding='ANSI')
 
 rows = csv.reader(csvfile)

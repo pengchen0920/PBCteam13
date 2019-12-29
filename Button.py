@@ -2,6 +2,7 @@
 import tkinter as tk
 from tkinter import ttk
 import functools
+import PastAnalysis as PA
 
 # NOTES:
 # 一週內會有這樣的資訊：(9) (6) --> (left) (already booked)

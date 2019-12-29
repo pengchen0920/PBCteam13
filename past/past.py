@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
+import functools
  
 # app = tk.Tk() 
 # app.geometry('1200x1200')
@@ -91,7 +92,7 @@ def create_two():
                 t_c.grid(row=2, column=0)
                 c = tk.Entry(w,width=30,fg="black")
                 c.grid(row=2, column=1)
-                done = tk.Button(w, text='完成', width=10, height=1, font=('Helvetica', 18), command="")
+                done = tk.Button(w, text='完成', width=10, height=1, font=('Helvetica', 18), command=functools.partial(PA.Text_Analysis, dataList))
                 done.grid(row=3, column=1)
         if (a.get()):
             t_b = tk.Label(w, text="請輸入欲查詢年份(2010~2019):")

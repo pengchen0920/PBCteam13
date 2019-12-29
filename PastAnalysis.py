@@ -6,7 +6,7 @@ import matplotlib.pyplot as py
 def Text_Analysis(dataList):
 
     # filename放csv網址，請自行修改
-    fileName = 'C:\\Users\\Asus\\Desktop\\badminton_1n3F_10y_NEW.csv'
+    fileName = 'Users\\zizhenli\\Documents\\GitHub\\PBCteam13\\badminton_1n3F_10y_NEW.csv'
     csvfile = open(fileName, 'r', encoding='ANSI')
     rows = csv.reader(csvfile)
 
@@ -74,7 +74,7 @@ def Text_Analysis(dataList):
 
     # 計算事件發生總次數，並以總次數計算各事件發生機率
     # 星期i 時段j
-    if preciseSearch in('y', 'Y'):
+    if precsiseSearch in('y', 'Y'):
         for i in range(7):
             for j in range(14):
                 if i == searchWeek-1 and j == searchHour-8:
