@@ -1,35 +1,21 @@
-#!/usr/bin/env python
-# coding: utf-8
-
 # NOTES:
-# 一週內會有這樣的資訊：(9) (6) --> (left) (already booked)
-# (15)可能代表有十五個空場，或十五個都被租走了，我有另外透過img的src抓狀態，並用中文註記
+# 1. 一週內會有這樣的資訊：(9) (6) --> (left) (already booked)
+# 2. (15)可能代表有十五個空場，或十五個都被租走了，我有另外透過 img 的 src 抓狀態，並用中文註記
 
-# 兩天內只能現場預約
-# 一週內可以網路預約
-# 8天～兩週可以知道場地資訊
+# RULES:
+# 1. 兩天內只能現場預約
+# 2. 一週內可以網路預約
+# 3. 8天～兩週可以知道場地資訊
 
 
-# # 未來兩週場地資料
-
-# ## 3F羽球場
-
-# In[1]:
-
+# 未來兩週場地資料
+# 3F羽球場
 
 import requests
 from bs4 import BeautifulSoup
 import datetime
 
-
-# In[62]:
-
-
 columns = []
-
-
-# In[63]:
-
 
 # there will be two weeks info on web --> can flip three pages at most --> l = 3
 for l in range(3):
@@ -57,9 +43,12 @@ for l in range(3):
     table_body = soup.find("table", attrs = attr_table)
 
     rows = table_body.find_all('tr')
+    
     for i in range(15):
         cols = rows[i].find_all('td')
+        
         for j in range(1,8):
+            
             # if it is the first row that contains date
             if i == 0:
                 column[j-1].append(cols[j].get_text())
@@ -79,20 +68,11 @@ for l in range(3):
                     elif cols[j].find('img').get('src') == 'Image/14dot1b.gif':
                          td_text += ":有場!"
 
-
                 column[j-1].append(td_text)
-
     columns.extend(column)
-
-
-# In[64]:
-
 
 start_day = str(datetime.date.today())
 end_day =  str(datetime.date.today() + datetime.timedelta(days= 14))
-
-
-# In[65]:
 
 
 # modify date string form to search easily
@@ -104,10 +84,6 @@ end_day = end_day.replace("-", "/")[5:]
 if end_day[0] == '0':
     end_day = end_day[1:]
 
-
-# In[66]:
-
-
 # filter columns to 14 days -> from today to 14 days after
 start_pos = 0
 
@@ -116,25 +92,13 @@ for i in range(len(columns)):
     if start_day in date:
         start_pos = i
 
-
-# In[67]:
-
-
 two_weeks_3F = columns[start_pos:start_pos+15]
-
-
-# In[68]:
-
 
 # within one week can be booked online
 for day in two_weeks_3F[:8]:
     for time in range(1, 15):
         if ("(" in day[time] ) and ("無場" not in day[time]):
             day[time] += " 已開放網路預約"
-
-
-# In[69]:
-
 
 # one week after can't be booked online
 for day in two_weeks_3F[8:]:
@@ -144,8 +108,6 @@ for day in two_weeks_3F[8:]:
 
 
 # for day in two_weeks_3F:
-#     print(day)
-#     print()
 
 time_table = []
 for i in range(15):
@@ -164,7 +126,6 @@ print(time_table)
 # important note!
 # (9) (6) --> (left) (already booked)
 
-
 # 1F!!!!!!
 import time
 from selenium import webdriver
@@ -173,16 +134,8 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.keys import Keys
 
-
-# In[58]:
-
-
 columns_1f = []
 driver = webdriver.Chrome("/Users/pengchen/Desktop/大四上/商管程設/final_project/chromedriver")
-
-
-# In[59]:
-
 
 for l in range(3):
     
@@ -273,10 +226,6 @@ for l in range(3):
                 
     columns_1f.extend(column)
 
-
-# In[61]:
-
-
 start_pos_1f = 0
 
 for i in range(len(columns_1f)):
@@ -285,15 +234,7 @@ for i in range(len(columns_1f)):
         start_pos_1f = i
         break
 
-
-# In[63]:
-
-
 two_weeks_1F = columns_1f[start_pos_1f:start_pos_1f+15]
-
-
-# In[65]:
-
 
 # within one week can be booked online
 for day in two_weeks_1F[:8]:
@@ -301,27 +242,15 @@ for day in two_weeks_1F[:8]:
         if ("(" in day[time] ) and ("無場" not in day[time]) and ("現場訂位" not in day[time]):
             day[time] += " 已開放網路預約"
 
-
-# In[67]:
-
-
 # one week after can't be booked online
 for day in two_weeks_1F[8:]:
     for time in range(1, 15):
         if ("(" in day[time] ) and ("無場" not in day[time]):
             day[time] += " 尚未開放網路預約"
 
-
-# In[69]:
-
-
 time_table_1f = []
 for i in range(15):
     time_table_1f.append([])
-
-
-# In[70]:
-
 
 for day in range(15):
     for j in range(1,15):
@@ -329,5 +258,3 @@ for day in range(15):
             time_table_1f[day].append(1)
         else:
             time_table_1f[day].append(0)
-
-
